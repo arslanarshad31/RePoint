@@ -1,6 +1,6 @@
 import React from 'react'
 import { Header } from 'semantic-ui-react'
-export default class Bankpage extends React.Component{
+export default class Footer extends React.Component{
     render(){
         return (
             <div>
