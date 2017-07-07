@@ -4,7 +4,7 @@ import { Button, Card, Image } from "semantic-ui-react";
 export default class Dashboard extends React.Component {
   render() {
     return (
-      <Card.Group style={{ paddingTop: "20px" }}>
+      <Card.Group>
         {[
           { name: "SC", pts: 1000 },
           { name: "HSBC", pts: 1000 },

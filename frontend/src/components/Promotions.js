@@ -4,7 +4,7 @@ import { Button, Card, Image, Item, Label, Icon } from "semantic-ui-react";
 export default class Promotions extends React.Component {
   render() {
     return (
-      <Item.Group divided style={{ marginTop: '500px' }}>
+      <Item.Group divided>
         {["SC", "HSBC", "CITI"].map(v => {
           return <PromotionItem/>;
         })}

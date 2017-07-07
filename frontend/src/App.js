@@ -21,7 +21,7 @@ const store = createStore(combineReducers({main: rootReducer}), initialState, ap
 const App = () => (
     <Provider store = {store}>
       <Router>
-        <div>
+        <div style={{ marginTop: '20px' }}>
           <Route exact path="/" component={Dashboard} />
           <Route exact path="/shop" component={Shop} />
           <Route exact path="/promotions" component={Promotions} />
