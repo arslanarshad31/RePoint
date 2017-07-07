@@ -5,6 +5,8 @@ import thunk from 'redux-thunk';
 import { BrowserRouter as Router, Route } from 'react-router-dom';
 import rootReducer from './reducers'
 import Dashboard from './components/Dashboard'
+import Bankpage from './components/Bankpage'
+import Top from './components/Top'
 import 'semantic-ui-css/semantic.min.css';
 
 let initialState;
@@ -17,7 +19,8 @@ const store = createStore(rootReducer, initialState, applyMiddleware(thunk));
 const App = () => (
   <Provider store = {store}>
     <div>
-      <Dashboard/>
+      <Top />
+      <Bankpage style={{"margin":"20px auto"}}/>
     </div>
   </Provider>
 )
