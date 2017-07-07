@@ -36,7 +36,7 @@ def index():
 	   	'/api/addUsers/{n : n < 200}': 'Add n bullshit users',
 		  '/api/addBanks': 'Add the main banks',
 	    '/api/addAccounts': 'Generate a random number of accounts (a : 0 < a <= numBanks) for every user',
-	    '/api/allForUser': 'Return everything for a given user'
+	    '/api/allForUser': 'Return everything for a given user',
 	   	'/api/accounts/<accountNumber>' : 'details of account number',
 	   	'/login/<username>/<password>' : 'gives all user details',
 	   	'/api/adduser/<username>/<email>/<phone_number>/<password>/' : 'AddUser api',
