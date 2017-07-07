@@ -45,6 +45,7 @@ class Account(db.Model):
     points = db.Column(db.Integer)
     expiry = db.Column(db.Date)
     rate = db.Column(db.Float)
+    username = db.Column(db.Float)
 
     def Promotion(self):
         testField = "testForNow"
@@ -65,8 +66,8 @@ class Account(db.Model):
     def __unicode__(self):
         return (str(self.accountNumber))
 
-'''
 
+'''
 class Goods(db.Model):
     __tablename__ = 'goods'
     __searchable__ = ['goodsname','goodsdescription']
