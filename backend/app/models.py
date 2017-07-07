@@ -10,8 +10,9 @@ class User(db.Model):
     lastName = db.Column(db.String(64))
     username = db.Column(db.String(64), index=True, unique=True)
     email = db.Column(db.String(120), index=True, unique=True)
-    phoneNumber = db.Column(db.String(140))
-    password = db.Column(db.String(140))
+    phone_number = db.Column(db.String(140))
+    password = db.Column(db.String(200))
+    uuid = db.Column(db.String(2000))
     
     def Addpeople(self,username,email,phone_number,password):
         self.username = username
@@ -54,6 +55,19 @@ class Account(db.Model):
     bankId = db.Column(db.String)
     balance = db.Column(db.Float)
     points = db.Column(db.Integer)
+    expiry = db.Column(db.Date)
+    rate = db.Column(db.Float)
+    username = db.Column(db.Float)
+
+    def AddAccount(self, accountNumber, userid, bankId, balance, points, expiry, rate, username):
+        self.accountNumber = accountNumber
+        self.userId = userId
+        self.bankId = bankId
+        self.balance = balance
+        self.points = points
+        self.expiry = expiry
+        self.rate = rate
+        self.username = username
 
     def define(self, accountNumber, userId, bankId, balance, points):
         self.accountNumber = accountNumber
@@ -148,7 +162,6 @@ class Transaction(db.Model):
         return str(self.transactionId)
 
 '''
-
 class Goods(db.Model):
     __tablename__ = 'goods'
     __searchable__ = ['goodsname','goodsdescription']

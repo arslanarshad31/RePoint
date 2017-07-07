@@ -34,10 +34,30 @@ def index():
 	   	'/api/all' : 'Return everything',
 	   	'/api/clear': 'Clear all tables completely',
 	   	'/api/addUsers/{n : n < 200}': 'Add n bullshit users',
-		'/api/addBanks': 'Add the main banks',
-	   '/api/addAccounts': 'Generate a random number of accounts (a : 0 < a <= numBanks) for every user',
-	   '/api/allForUser': 'Return everything for a given user'
+		  '/api/addBanks': 'Add the main banks',
+	    '/api/addAccounts': 'Generate a random number of accounts (a : 0 < a <= numBanks) for every user',
+	    '/api/allForUser': 'Return everything for a given user'
+	   	'/api/accounts/<accountNumber>' : 'details of account number',
+	   	'/login/<username>/<password>' : 'gives all user details',
+	   	'/api/adduser/<username>/<email>/<phone_number>/<password>/' : 'AddUser api',
+	   	'/api/accounts/<accountNumber>/<userid>/<bankId>/<balance>/<points>/<expiry>/<rate>/<username>/' : 'add acounts'
    })
+
+@app.route('/api/users/')
+@app.route('/api/users/uuid/<uuid>')
+def get_user_by_uuid(uuid=None):
+	
+	if uuid is not None:
+		user = User.query.filter_by(uuid = uuid).all()
+		if len(user) > 0 :
+		    data = user[0].getdata()
+		    return jsonify(data)
+		return jsonify({})
+
+	data = User.query.all()
+
+	data = [x.getdata() for x in data]
+	return jsonify(data)
 
 @app.route('/api/users/')
 @app.route('/api/users/<username>')
@@ -55,6 +75,19 @@ def get_user(username=None):
 	return jsonify(data)
 
 @app.route('/api/accounts/')
+@app.route('/api/accounts/<accountNumber>')
+def get_account_number_for_account(accountNumber=None):
+	if accountNumber is None :
+		return jsonify({})
+
+	allacount = Accounts.query.filter_by(accountNumber= accountNumber).all()
+	if len(allacount)> 0:
+		data = [  x.getdata() for x in allacount]
+		return jsonify(data)
+
+	return jsonify({})
+
+@app.route('/api/accounts/')
 @app.route('/api/accounts/<username>')
 def get_username_for_account(username=None):
 	if username is None :
@@ -66,6 +99,7 @@ def get_username_for_account(username=None):
 		return jsonify(data)
 
 	return jsonify({})
+
 
 @app.route('/api/all/')
 @app.route('/api/all/<username>')
@@ -188,7 +222,7 @@ def allForUser(username = None):
 	relevantBanks = [bank.getData() for bank in Bank.query.filter(Bank.bankId.in_([account['bankId'] for account in accounts])).all()]
 	return jsonify({"user": user, "accounts": accounts, "relevantBanks": relevantBanks})
 
-		#     if file and allowed_file((file.filename).lower()):
+#     if file and allowed_file((file.filename).lower()):
 #         filename = secure_filename(file.filename).lower()
 #         t= file.save(os.path.join(app.config['UPLOAD_FOLDER'], filename))
 #         return jsonify({
@@ -305,9 +339,48 @@ def allForUser(username = None):
 #     return jsonify({})
 
 
-# @app.route('/delete/<product>')
-# @app.route('/delete/<product>/')
-# def delete(product= None):
+@app.route('/login/<username>/<password>/')
+@app.route('/login/<username>/<password>')
+def login(username,password):
+  user = User.query.filter_by(username = username).all()
+  if len(user) > 0 :
+    data = user[0].getdata()
+    if data['password'] == password : 
+      return jsonify(data)
+    else:
+      return jsonify({})
+  else:
+    return jsonify({})
+
+
+@app.route('/api/adduser/<username>/<email>/<phone_number>/<password>/')
+def add_user(username,email,phone_number,password):
+  user = User()
+  user.Addpeople(username,email,phone_number,password)
+  try:
+    db.session.add(good)
+    db.session.commit()
+    return jsonify(good.getdata())
+  except Exception as e:
+    return jsonify({'status' : 'Error'})
+
+
+@app.route('/api/accounts/<accountNumber>/<userid>/<bankId>/<balance>/<points>/<expiry>/<rate>/<username>/')
+def add_accounts(accountNumber, userid, bankId, balance, points, expiry, rate, username):
+
+  account = Account()
+  account.AddAccount(accountNumber, userid, bankId, balance, points, expiry, rate, username)
+  try:
+    db.session.add(account)
+    db.session.commit()
+    return jsonify(account.getdata())
+  except Exception as e:
+    return jsonify({'status' : 'Error'})
+
+
+# @app.route('/delete/accounts/<accountNumber>')
+# def delete(accountNumber= None):
+
 #   if product is None :
 #     return jsonify({'status' : 'error'})
 #   else:
