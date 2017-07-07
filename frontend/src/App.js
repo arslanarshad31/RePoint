@@ -5,6 +5,7 @@ import thunk from 'redux-thunk';
 import { BrowserRouter as Router, Route } from 'react-router-dom';
 import rootReducer from './reducers'
 import Dashboard from './components/Dashboard'
+import PointConversion from './components/PointConversion';
 import 'semantic-ui-css/semantic.min.css';
 
 let initialState;
@@ -15,11 +16,15 @@ if (typeof(window) !== 'undefined') {
 const store = createStore(rootReducer, initialState, applyMiddleware(thunk));
 
 const App = () => (
-  <Provider store = {store}>
-    <div>
-      <Dashboard/>
-    </div>
-  </Provider>
+    <Provider store = {store}>
+      <Router>
+        <div>
+          <Route exact path="/" component={Dashboard} />
+          <Route exact path="/convert" component={PointConversion} />
+        </div>
+      </Router>
+    </Provider>
+
 )
 
 export default App;
