@@ -4,8 +4,6 @@ from flask_sqlalchemy import SQLAlchemy
 from flask_login import LoginManager
 
 
-
-
 import sys
 if sys.version_info >= (3, 0):
     enable_search = False
@@ -38,5 +36,4 @@ class FlaskAdminView(sqla.ModelView):
 
 ## Admin panel
 admin.add_view(FlaskAdminView(User, db.session))
-admin.add_view(FlaskAdminView(Goods, db.session))
-whooshalchemy.whoosh_index(app, Goods)
+admin.add_view(FlaskAdminView(Account, db.session))

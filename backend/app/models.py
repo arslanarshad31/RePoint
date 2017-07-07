@@ -34,16 +34,38 @@ class User(db.Model):
     def __unicode__(self):
         return (self.username)
 
+class Account(db.Model):
+    __tablename__ = 'AccountTable'
+    __searchable__ = ['accountNumber', 'bankId']
 
-class BankAccountDetails(object):
+    accountNumber = db.Column(db.Integer, primary_key=True)
+    userId = db.Column(db.Integer)
+    bankId = db.Column(db.String)
+    balance = db.Column(db.Float)
+    points = db.Column(db.Integer)
+    expiry = db.Column(db.Date)
+    rate = db.Column(db.Float)
 
-    """docstring for BankAccountDetails"""
-    def __init__(self, arg):
-        super(BankAccountDetails, self).__init__()
-        self.arg = arg
+    def Promotion(self):
+        testField = "testForNow"
+
+    def getdata(self):
+        return {
+            'accountNumber': self.accountNumber,
+            'userId': self.userId,
+            'bankId': self.bankId,
+            'balance': self.balance,
+            'points': self.points,
+            'rate': self.rate
+        }
+
+    def __repr__(self):
+        return str(self.accountNumber)
+
+    def __unicode__(self):
+        return (str(self.accountNumber))
 
 
-        
 class Goods(db.Model):
     __tablename__ = 'goods'
     __searchable__ = ['goodsname','goodsdescription']
