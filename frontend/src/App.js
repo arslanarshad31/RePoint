@@ -2,6 +2,8 @@ import React, { Component } from 'react';
 import { createStore, applyMiddleware } from 'redux';
 import { Provider } from 'react-redux';
 import thunk from 'redux-thunk';
+import { BrowserRouter as Router, Route } from 'react-router-dom';
+import rootReducer from './reducers'
 
 let initialState;
 if (typeof(window) !== 'undefined') {
