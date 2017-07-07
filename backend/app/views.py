@@ -28,8 +28,29 @@ def index():
 	   	'/api/users': "all users",
 	   	'/api/users/<username>': 'for this user',
 	   	'/api/accounts/<username>' : 'account of users',
-	   	'/api/all' : 'RETURN EVERYTHING'
+	   	'/api/all' : 'RETURN EVERYTHING',
+	   	'/api/accounts/<accountNumber>' : 'details of account number',
+	   	'/login/<username>/<password>' : 'gives all user details',
+	   	'/api/adduser/<username>/<email>/<phone_number>/<password>/' : 'AddUser api',
+	   	'/api/accounts/<accountNumber>/<userid>/<bankId>/<balance>/<points>/<expiry>/<rate>/<username>/' : 'add acounts'
+
    })
+
+@app.route('/api/users/')
+@app.route('/api/users/uuid/<uuid>')
+def get_user_by_uuid(uuid=None):
+	
+	if uuid is not None:
+		user = User.query.filter_by(uuid = uuid).all()
+		if len(user) > 0 :
+		    data = user[0].getdata()
+		    return jsonify(data)
+		return jsonify({})
+
+	data = User.query.all()
+
+	data = [x.getdata() for x in data]
+	return jsonify(data)
 
 @app.route('/api/users/')
 @app.route('/api/users/<username>')
@@ -48,6 +69,19 @@ def get_user(username=None):
 	return jsonify(data)
 
 @app.route('/api/accounts/')
+@app.route('/api/accounts/<accountNumber>')
+def get_account_number_for_account(accountNumber=None):
+	if accountNumber is None :
+		return jsonify({})
+
+	allacount = Accounts.query.filter_by(accountNumber= accountNumber).all()
+	if len(allacount)> 0:
+		data = [  x.getdata() for x in allacount]
+		return jsonify(data)
+
+	return jsonify({})
+
+@app.route('/api/accounts/')
 @app.route('/api/accounts/<username>')
 def get_username_for_account(username=None):
 	if username is None :
@@ -60,132 +94,57 @@ def get_username_for_account(username=None):
 
 	return jsonify({})
 
+
 @app.route('/api/all/')
 def get_all():
 	userData = [user.getdata() for user in User.query.all()]
 	accountData = [account.getdata() for account in Account.query.all()]
 	bankData = []
 	return jsonify({'users': userData, 'accounts': accountData, 'banks': bankData})
-#     if file and allowed_file((file.filename).lower()):
-#         filename = secure_filename(file.filename).lower()
-#         t= file.save(os.path.join(app.config['UPLOAD_FOLDER'], filename))
-#         return jsonify({
-#         'file' : url_for('uploaded_file',filename=filename),
-#         'name' : filename,
-#         'ocr'  : url_for('convert_file',filename=filename),
-#         'barcode' : url_for('bar_Code',filename=filename)
-#         })
-#     else:
-#     	return(str("Error!!"))
-# @app.route('/uploads/<filename>/')
-# @app.route('/uploads/<filename>')
-# def uploaded_file(filename):
-#     return send_from_directory('/home/engineer/htdocs/stop/webapi/uploads',filename)
-# @app.route('/barcode/<filename>')
-# @app.route('/barcode/<filename>')
-# def bar_Code(filename):
-#   path = str('/home/engineer/htdocs/stop/webapi/uploads/'+filename).lower()
-#   image = cv2.imread(path)
-#   gray = cv2.cvtColor(image, cv2.COLOR_BGR2GRAY)
-#   gradX = cv2.Sobel(gray, ddepth = cv2.cv.CV_32F, dx = 1, dy = 0, ksize = -1)
-#   gradY = cv2.Sobel(gray, ddepth = cv2.cv.CV_32F, dx = 0, dy = 1, ksize = -1)
-#   # subtract the y-gradient from the x-gradient
-#   gradient = cv2.subtract(gradX, gradY)
-#   gradient = cv2.convertScaleAbs(gradient)
-#   # blur and threshold the image
-#   blurred = cv2.blur(gradient, (9, 9))
-#   (_, thresh) = cv2.threshold(blurred, 225, 255, cv2.THRESH_BINARY)
-#   # construct a closing kernel and apply it to the thresholded image
-#   kernel = cv2.getStructuringElement(cv2.MORPH_RECT, (21, 7))
-#   closed = cv2.morphologyEx(thresh, cv2.MORPH_CLOSE, kernel)
-#   # perform a series of erosions and dilations
-#   closed = cv2.erode(closed, None, iterations = 4)
-#   closed = cv2.dilate(closed, None, iterations = 4)
-#   # find the contours in the thresholded image, then sort the contours
-#   # by their area, keeping only the largest one
-#   (cnts, _) = cv2.findContours(closed.copy(), cv2.RETR_EXTERNAL,
-#     cv2.CHAIN_APPROX_SIMPLE)
-#   c = sorted(cnts, key = cv2.contourArea, reverse = True)[0]
-#   # compute the rotated bounding box of the largest contour
-#   rect = cv2.minAreaRect(c)
-#   box = np.int0(cv2.cv.BoxPoints(rect))
-#   # draw a bounding box arounded the detected barcode and display the
-#   # image
-#   cv2.drawContours(image, [box], -1, (0, 255, 0), 3)
-#   path = path + '_bar.png'
-#   cv2.imwrite(path,image)
-#   pil = Image.open(path)
-#   pil = pil.convert('L')
-#   width, height = pil.size
-#   raw = pil.tostring()
-
-#   # wrap image data
-#   image = zbar.Image(width, height, 'Y800', raw)
-#   scanner = zbar.ImageScanner()
-
-#   # configure the reader
-#   scanner.parse_config('enable')
-#   # scan the image for barcodes
-#   scanner.scan(image)
-#   string = "result : "
-#   # extract results
-#   for symbol in image:
-#       # do something useful with results
-#       string = string + 'decoded' +  str(symbol.type) + ' symbol ' +  str(symbol.data) + "\n"
-#   return str(string)
 
 
-# @app.route('/convert/<filename>/')
-# @app.route('/convert/<filename>')
-# def convert_file(filename):
-#     #path = str(app.config['UPLOAD_FOLDER']+filename)
-#     path = str('/home/engineer/htdocs/stop/webapi/uploads/'+filename).lower()
-#     try:
-#     	image=cv.LoadImage(path, cv.CV_LOAD_IMAGE_GRAYSCALE)
-#     except Exception as e :
-#     	return str("Error ")+str(e)
-#     api = tesseract.TessBaseAPI()
-#     api.Init(".","eng",tesseract.OEM_DEFAULT)
-#     api.SetPageSegMode(tesseract.PSM_AUTO)
-#     tesseract.SetCvImage(image,api)
-#     text=api.GetUTF8Text()
-#     conf=api.MeanTextConf()
-#     return jsonify({'output' : str(text)})
+@app.route('/login/<username>/<password>/')
+@app.route('/login/<username>/<password>')
+def login(username,password):
+  user = User.query.filter_by(username = username).all()
+  if len(user) > 0 :
+    data = user[0].getdata()
+    if data['password'] == password : 
+      return jsonify(data)
+    else:
+      return jsonify({})
+  else:
+    return jsonify({})
 
 
-# @app.route('/login/<username>/<password>/')
-# @app.route('/login/<username>/<password>')
-# def login(username,password):
-#   user = User.query.filter_by(username = username).all()
-#   if len(user) > 0 :
-#     data = user[0].getdata()
-#     if data['password'] == password : 
-#       return jsonify(data)
-#     else:
-#       return jsonify({})
-#   else:
-#     return jsonify({})
-
-# @app.route('/product/<product>',methods = ['GET','POST'])
-# def get_product_by_id(product=0):
-#   good = Goods.query.filter_by(goodsid= product, delete = 0 ).all()
-#   if len(good)  > 0 :
-#     return jsonify(good[0].getdata())
-#   else : 
-#     return jsonify({})
-
-# @app.route('/user/<userid>',methods = ['GET','POST'])
-# def get_user_by_id(userid=0):
-#   user = User.query.filter_by(id = userid).all()
-#   if len(user) > 0 :
-#     return jsonify(user[0].getdata())
-#   else:
-#     return jsonify({})
+@app.route('/api/adduser/<username>/<email>/<phone_number>/<password>/')
+def add_user(username,email,phone_number,password):
+  user = User()
+  user.Addpeople(username,email,phone_number,password)
+  try:
+    db.session.add(good)
+    db.session.commit()
+    return jsonify(good.getdata())
+  except Exception as e:
+    return jsonify({'status' : 'Error'})
 
 
-# @app.route('/delete/<product>')
-# @app.route('/delete/<product>/')
-# def delete(product= None):
+@app.route('/api/accounts/<accountNumber>/<userid>/<bankId>/<balance>/<points>/<expiry>/<rate>/<username>/')
+def add_accounts(accountNumber, userid, bankId, balance, points, expiry, rate, username):
+
+  account = Account()
+  account.AddAccount(accountNumber, userid, bankId, balance, points, expiry, rate, username)
+  try:
+    db.session.add(account)
+    db.session.commit()
+    return jsonify(account.getdata())
+  except Exception as e:
+    return jsonify({'status' : 'Error'})
+
+
+# @app.route('/delete/accounts/<accountNumber>')
+# def delete(accountNumber= None):
+
 #   if product is None :
 #     return jsonify({'status' : 'error'})
 #   else:
