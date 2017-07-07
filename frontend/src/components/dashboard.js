@@ -4,7 +4,7 @@ export default class Dashboard extends React.Component{
 
     render(){
         return (<div><h1>HELLO</h1>
-            {( ["SC", "HSBC", "CITI"]).map((val) => {
+            {(["SC", "HSBC", "CITI"]).map((val) => {
                 return (<DashItem content={val}></DashItem>)
             }
             )}</div>
