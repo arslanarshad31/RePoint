@@ -35,14 +35,6 @@ class User(db.Model):
         return (self.username)
 
 
-class BankAccountDetails(object):
-
-    """docstring for BankAccountDetails"""
-    def __init__(self, arg):
-        super(BankAccountDetails, self).__init__()
-        self.arg = arg
-
-
         
 class Goods(db.Model):
     __tablename__ = 'goods'
