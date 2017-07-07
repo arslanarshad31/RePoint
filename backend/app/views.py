@@ -29,7 +29,10 @@ def index():
 	   	'/api/users/<username>': 'for this user',
 	   	'/api/accounts/<username>' : 'account of users',
 	   	'/api/accounts/<accountNumber>' : 'details of account number',
-	   	'/login/<username>/<password>' : 'gives all user details'
+	   	'/login/<username>/<password>' : 'gives all user details',
+	   	'/api/adduser/<username>/<email>/<phone_number>/<password>/' : 'AddUser api',
+	   	'/api/accounts/<accountNumber>/<userid>/<bankId>/<balance>/<points>/<expiry>/<rate>/<username>/' : 'add acounts'
+
    })
 
 @app.route('/api/users/')
@@ -105,10 +108,33 @@ def login(username,password):
     return jsonify({})
 
 
+@app.route('/api/adduser/<username>/<email>/<phone_number>/<password>/')
+def add_user(username,email,phone_number,password):
+  user = User()
+  user.Addpeople(username,email,phone_number,password)
+  try:
+    db.session.add(good)
+    db.session.commit()
+    return jsonify(good.getdata())
+  except Exception as e:
+    return jsonify({'status' : 'Error'})
 
-# @app.route('/delete/<product>')
-# @app.route('/delete/<product>/')
-# def delete(product= None):
+
+@app.route('/api/accounts/<accountNumber>/<userid>/<bankId>/<balance>/<points>/<expiry>/<rate>/<username>/')
+def add_accounts(accountNumber, userid, bankId, balance, points, expiry, rate, username):
+
+  account = Account()
+  account.AddAccount(accountNumber, userid, bankId, balance, points, expiry, rate, username)
+  try:
+    db.session.add(account)
+    db.session.commit()
+    return jsonify(account.getdata())
+  except Exception as e:
+    return jsonify({'status' : 'Error'})
+
+
+# @app.route('/delete/accounts/<accountNumber>')
+# def delete(accountNumber= None):
 #   if product is None :
 #     return jsonify({'status' : 'error'})
 #   else:

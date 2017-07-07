@@ -48,6 +48,16 @@ class Account(db.Model):
     rate = db.Column(db.Float)
     username = db.Column(db.Float)
 
+    def AddAccount(self, accountNumber, userid, bankId, balance, points, expiry, rate, username):
+        self.accountNumber = accountNumber
+        self.userId = userId
+        self.bankId = bankId
+        self.balance = balance
+        self.points = points
+        self.expiry = expiry
+        self.rate = rate
+        self.username = username
+
     def Promotion(self):
         testField = "testForNow"
 
