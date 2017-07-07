@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { createStore, applyMiddleware } from 'redux';
+import { createStore, combineReducers, applyMiddleware } from 'redux';
 import { Provider } from 'react-redux';
 import thunk from 'redux-thunk';
 import { BrowserRouter as Router, Route } from 'react-router-dom';
@@ -15,7 +15,7 @@ if (typeof(window) !== 'undefined') {
   initialState = window.__REDUX_DEVTOOLS_EXTENSION__ && window.__REDUX_DEVTOOLS_EXTENSION__();
 }
 
-const store = createStore(rootReducer, initialState, applyMiddleware(thunk));
+const store = createStore(combineReducers({main: rootReducer}), initialState, applyMiddleware(thunk));
 
 const App = () => (
     <Provider store = {store}>
