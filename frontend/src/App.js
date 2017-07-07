@@ -17,12 +17,23 @@ if (typeof(window) !== 'undefined') {
 const store = createStore(rootReducer, initialState, applyMiddleware(thunk));
 
 const App = () => (
+<<<<<<< HEAD
   <Provider store = {store}>
     <div>
       <Top />
       <Bankpage style={{"margin":"20px auto"}}/>
     </div>
   </Provider>
+=======
+    <Provider store = {store}>
+      <Router>
+        <div>
+          <Route exact path="/" component={Dashboard} />
+        </div>
+      </Router>
+    </Provider>
+
+>>>>>>> b09e434203ac5fbaeba87f80eba3e5ede5c438ce
 )
 
 export default App;

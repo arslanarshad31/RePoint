@@ -10,7 +10,8 @@ class User(db.Model):
     username = db.Column(db.String(64), index=True, unique=True)
     email = db.Column(db.String(120), index=True, unique=True)
     phone_number = db.Column(db.String(140))
-    password = db.Column(db.String(140))
+    password = db.Column(db.String(200))
+    uuid = db.Column(db.String(2000))
     
     def Addpeople(self,username,email,phone_number,password):
         self.username = username
@@ -35,7 +36,7 @@ class User(db.Model):
         return (self.username)
 
 class Account(db.Model):
-    __tablename__ = 'AccountTable'
+    __tablename__ = 'accounts'
     __searchable__ = ['accountNumber', 'bankId']
 
     accountNumber = db.Column(db.Integer, primary_key=True)
@@ -45,6 +46,18 @@ class Account(db.Model):
     points = db.Column(db.Integer)
     expiry = db.Column(db.Date)
     rate = db.Column(db.Float)
+    username = db.Column(db.Float)
+
+    def AddAccount(self, accountNumber, userid, bankId, balance, points, expiry, rate, username):
+        self.accountNumber = accountNumber
+        self.userId = userId
+        self.bankId = bankId
+        self.balance = balance
+        self.points = points
+        self.expiry = expiry
+        self.rate = rate
+        self.username = username
+
 
     def Promotion(self):
         testField = "testForNow"
@@ -55,8 +68,7 @@ class Account(db.Model):
             'userId': self.userId,
             'bankId': self.bankId,
             'balance': self.balance,
-            'points': self.points,
-            'rate': self.rate
+            'points': self.points
         }
 
     def __repr__(self):
@@ -65,8 +77,8 @@ class Account(db.Model):
     def __unicode__(self):
         return (str(self.accountNumber))
 
-'''
 
+'''
 class Goods(db.Model):
     __tablename__ = 'goods'
     __searchable__ = ['goodsname','goodsdescription']
