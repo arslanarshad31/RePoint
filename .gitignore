@@ -1,8 +1,6 @@
 frontend/node_modules
-<<<<<<< HEAD
 backend/lib
 backend/bin
 backend/include
-=======
 *.pyc
->>>>>>> 5c471afc1de29a55634efefdd67cf84d9cda84c8
+frontend/package-lock.json
