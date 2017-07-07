@@ -65,6 +65,7 @@ class Account(db.Model):
     def __unicode__(self):
         return (str(self.accountNumber))
 
+'''
 
 class Goods(db.Model):
     __tablename__ = 'goods'
@@ -119,3 +120,4 @@ class Goods(db.Model):
 
     def __unicode__(self):
         return (self.goodsname)
+'''
