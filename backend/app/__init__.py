@@ -1,7 +1,7 @@
 import os
 from flask import Flask
-from flask.ext.sqlalchemy import SQLAlchemy
-from flask.ext.login import LoginManager
+from flask_sqlalchemy import SQLAlchemy
+from flask_login import LoginManager
 
 
 
@@ -11,10 +11,10 @@ if sys.version_info >= (3, 0):
     enable_search = False
 else:
     enable_search = True
-    import flask.ext.whooshalchemy as whooshalchemy
+    import flask_whooshalchemy as whooshalchemy
 
-from flask.ext.admin.contrib import sqla
-from flask.ext.admin import Admin
+from flask_admin.contrib import sqla
+from flask_admin import Admin
 import logging
 from logging.handlers import RotatingFileHandler
 
@@ -36,6 +36,7 @@ class FlaskAdminView(sqla.ModelView):
     column_display_pk = True
 
 
+## Admin panel
 admin.add_view(FlaskAdminView(User, db.session))
 admin.add_view(FlaskAdminView(Goods, db.session))
 whooshalchemy.whoosh_index(app, Goods)
