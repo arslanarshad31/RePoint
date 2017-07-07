@@ -20,7 +20,6 @@ const App = () => (
       <Router>
         <div>
           <Route exact path="/" component={Dashboard} />
-          <Route exact path="/convert" component={PointConversion} />
         </div>
       </Router>
     </Provider>
