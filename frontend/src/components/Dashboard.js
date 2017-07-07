@@ -1,7 +1,7 @@
 import React from "react";
 import { Button, Card, Image } from "semantic-ui-react";
-
-export default class Dashboard extends React.Component {
+import AnimatedWrapper from "../AnimatedWrapper";
+class DashboardComponent extends React.Component {
   render() {
     return (
       <Card.Group style={{ paddingTop: "20px" }}>
@@ -16,6 +16,8 @@ export default class Dashboard extends React.Component {
     );
   }
 }
+
+
 
 class DashItem extends React.Component {
   render() {
@@ -45,3 +47,6 @@ class DashItem extends React.Component {
     );
   }
 }
+
+const Dashboard = AnimatedWrapper(DashboardComponent);
+export default Dashboard

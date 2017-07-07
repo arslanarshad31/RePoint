@@ -9,6 +9,7 @@ import Bankpage from './components/Bankpage'
 import Shop from './components/Shop'
 import Top from './components/Top'
 import 'semantic-ui-css/semantic.min.css';
+import TransitionGroup from "react-transition-group/TransitionGroup";
 
 let initialState;
 if (typeof(window) !== 'undefined') {
@@ -16,13 +17,20 @@ if (typeof(window) !== 'undefined') {
 }
 
 const store = createStore(combineReducers({main: rootReducer}), initialState, applyMiddleware(thunk));
-
+const firstChild = props => {
+  const childrenArray = React.Children.toArray(props.children);
+  return childrenArray[0] || null;
+};
 const App = () => (
     <Provider store = {store}>
       <Router>
         <div>
-          <Route exact path="/" component={Dashboard} />
-          <Route exact path="/shop" component={Shop} />
+          <Route exact path="/"   children={() => (
+                  <TransitionGroup component={Dashboard}></TransitionGroup>
+              )} />
+          <Route exact path="/shop"   children={() => (
+                  <TransitionGroup component={Shop}></TransitionGroup>
+              )} />
         </div>
       </Router>
     </Provider>
