@@ -1,7 +1,7 @@
 import React, { Component } from "react";
 import { Pie } from "react-chartjs-2";
 import { Message, Label, Accordion, Card } from 'semantic-ui-react';
-
+  
 export default class Portfolio extends Component {
   render() {
     const panels = [
@@ -12,7 +12,7 @@ export default class Portfolio extends Component {
           <Message
             info
             header="Details about APPLE stock"
-            content="Details"
+            content={(<DetailsPanel />)}
           />
         )
       },
@@ -79,3 +79,17 @@ export default class Portfolio extends Component {
     );
   }
 }
+
+class DetailsPanel extends Component{
+  render(){
+    return (
+      <div style={{"textAlign":"center"}}>
+          <table border="0" style={{"width": "70%", "fontWeight":"bold"}}>
+            <tr><td>Current Price:</td><td>HK$563 <span style={{color: "green"}}>(+1.04%)</span></td></tr>
+            <tr><td>Your Returns:</td><td>HK$20053 <span style={{color: "red"}}>(-0.94%)</span></td></tr>
+          </table>
+      </div>
+    )
+  }
+}
+
