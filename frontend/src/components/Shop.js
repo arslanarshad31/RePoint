@@ -4,9 +4,9 @@ import { Button, Card, Image, Item, Label, Icon } from "semantic-ui-react";
 export default class Shop extends React.Component {
   render() {
     return (
-      <Item.Group divided>
+      <Item.Group divided style={{ marginTop: '500px' }}>
         {["SC", "HSBC", "CITI"].map(v => {
-          return <ShopItem />;
+          return <ShopItem/>;
         })}
       </Item.Group>
     );
@@ -16,10 +16,10 @@ export default class Shop extends React.Component {
 class ShopItem extends React.Component {
   render() {
     return (
-      <div style={{ display: "flex", flexDirection: "row" }}>
+      <div style={{ display: "flex", flexDirection: "row", marginBottom: '10px' }}>
         <Image
           src="https://dummyimage.com/100x100"
-          style={{ marginRight: "20px", paddingBottom: "20px" }}
+          style={{ marginRight: "20px"}}
         />
         <Item fluid>
           <Item.Content>
