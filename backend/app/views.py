@@ -33,6 +33,22 @@ def index():
    })
 
 @app.route('/api/users/')
+@app.route('/api/users/uuid/<uuid>')
+def get_user_by_uuid(uuid=None):
+	
+	if uuid is not None:
+		user = User.query.filter_by(uuid = uuid).all()
+		if len(user) > 0 :
+		    data = user[0].getdata()
+		    return jsonify(data)
+		return jsonify({})
+
+	data = User.query.all()
+
+	data = [x.getdata() for x in data]
+	return jsonify(data)
+
+@app.route('/api/users/')
 @app.route('/api/users/<username>')
 def get_user(username=None):
 	

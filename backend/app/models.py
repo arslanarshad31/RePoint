@@ -10,7 +10,8 @@ class User(db.Model):
     username = db.Column(db.String(64), index=True, unique=True)
     email = db.Column(db.String(120), index=True, unique=True)
     phone_number = db.Column(db.String(140))
-    password = db.Column(db.String(140))
+    password = db.Column(db.String(200))
+    uuid = db.Column(db.String(2000))
     
     def Addpeople(self,username,email,phone_number,password):
         self.username = username
