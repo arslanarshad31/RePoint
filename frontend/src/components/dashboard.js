@@ -1,21 +1,26 @@
-import React from 'react'
-//import { connect } from 'react-redux';
-export default class Dashboard extends React.Component{
+import React from "react";
+import { Image, List } from "semantic-ui-react";
 
-    render(){
-        return (<div><h1>HELLO</h1>
-            {(["SC", "HSBC", "CITI"]).map((val) => {
-                return (<DashItem content={val}></DashItem>)
-            }
-            )}</div>
-        )
-
-    }
-
+export default class Dashboard extends React.Component {
+  render() {
+    return (
+      <List celled>
+        <DashItem />
+      </List>
+    );
+  }
 }
 
-class DashItem extends React.Component{
-    render(){
-        return (<div style={{"border": "2px solid", "width":"auto", "height":"50px"}}>{this.props.content}</div>)
-    }
+class DashItem extends React.Component {
+  render() {
+    return (
+      <List.Item>
+        <Image avatar src="https://dummyimage.com/600x400/000/fff" />
+        <List.Content>
+          <List.Header>Snickerdoodle</List.Header>
+          An excellent companion
+        </List.Content>
+      </List.Item>
+    );
+  }
 }
