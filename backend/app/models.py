@@ -2,11 +2,12 @@ from hashlib import md5
 from app import db
 from app import app
 
-
 class User(db.Model):
     __tablename__ = 'users'
 
-    id = db.Column(db.Integer, primary_key=True)
+    userId = db.Column(db.Integer, primary_key=True)
+    firstName = db.Column(db.String(64))
+    lastName = db.Column(db.String(64))
     username = db.Column(db.String(64), index=True, unique=True)
     email = db.Column(db.String(120), index=True, unique=True)
     phone_number = db.Column(db.String(140))
@@ -16,18 +17,29 @@ class User(db.Model):
     def Addpeople(self,username,email,phone_number,password):
         self.username = username
         self.email = email
-        self.phone_number = phone_number
+        self.phoneNumber = phone_number
         self.password = password
+
+    def define(self, user):
+        self.userId = user['userId']
+        self.firstName = user['firstName']
+        self.lastName = user['lastName']
+        self.username = user['username']
+        self.email = user['email']
+        self.phoneNumber = user['phoneNumber']
+        self.password = user['password']
 
     def __repr__(self):
         return '<User %r>' % (self.nickname)
     
-    def getdata(self):
+    def getData(self):
         data = {
-            'id': self.id ,
+            'userId': self.userId,
+            'firstName': self.firstName,
+            'lastName': self.lastName,
             'username' : self.username,
             'email' : self.email,
-            'phone_number' :  self.phone_number,
+            'phoneNumber' :  self.phoneNumber,
             'password' : self.password
         }
         return data 
@@ -37,9 +49,8 @@ class User(db.Model):
 
 class Account(db.Model):
     __tablename__ = 'accounts'
-    __searchable__ = ['accountNumber', 'bankId']
 
-    accountNumber = db.Column(db.Integer, primary_key=True)
+    accountNumber = db.Column(db.String(16), primary_key=True)
     userId = db.Column(db.Integer)
     bankId = db.Column(db.String)
     balance = db.Column(db.Float)
@@ -58,17 +69,20 @@ class Account(db.Model):
         self.rate = rate
         self.username = username
 
+    def define(self, accountNumber, userId, bankId, balance, points):
+        self.accountNumber = accountNumber
+        self.userId = userId
+        self.bankId = bankId
+        self.balance = balance
+        self.points = points
 
-    def Promotion(self):
-        testField = "testForNow"
-
-    def getdata(self):
+    def getData(self):
         return {
             'accountNumber': self.accountNumber,
             'userId': self.userId,
             'bankId': self.bankId,
             'balance': self.balance,
-            'points': self.points
+            'points': self.points,
         }
 
     def __repr__(self):
@@ -77,6 +91,75 @@ class Account(db.Model):
     def __unicode__(self):
         return (str(self.accountNumber))
 
+class Bank(db.Model):
+    __tablename__ = 'bank'
+    bankId = db.Column(db.Integer, primary_key=True)
+    name = db.Column(db.String(128))
+    logoURL = db.Column(db.String(512))
+
+    def getData(self):
+        return {
+            'bankId': self.bankId,
+            'name': self.name,
+            'logoURL': self.logoURL
+        }
+
+    def define(self, bank):
+        self.bankId = bank['bankId']
+        self.name = bank['name']
+        self.logoURL = bank['logoURL']
+
+    def __repr__(self):
+        return str(self.name)
+
+    def __unicode__(self):
+        return str(self.name)
+
+class Product(db.Model):
+    __tablename__ = 'product'
+    productId = db.Column(db.Integer, primary_key=True)
+    name = db.Column(db.String(64))
+    bankId = db.Column(db.Integer)
+    price = db.Column(db.Integer)
+    promotionOngoing = db.Column(db.Integer)
+    promotionPrice = db.Column(db.Integer)
+    promotionEnd = db.Column(db.Date)
+
+    def getData(self):
+        return {
+            'productId': self.productId,
+            'name': self.name,
+            'bankId': self.bankId,
+            'price': self.price,
+            'promotionOngoing': self.promotionOngoing,
+            'promotionPrice': self.promotionPrice,
+            'promotionEnd': self.promotionEnd
+        }
+
+    def __repr__(self):
+        return str(self.productId)
+
+    def __unicode__(self):
+        return str(self.productId)
+
+class Transaction(db.Model):
+    __tablename__ = 'transaction'
+    transactionId = db.Column(db.Integer, primary_key=True)
+    userId = db.Column(db.Integer)
+    productId = db.Column(db.Integer)
+
+    def getData(self):
+        return {
+            'transactionId': self.transactionId,
+            'userId': self.userId,
+            'productId': self.productId
+        }
+
+    def __repr__(self):
+        return str(self.transactionId)
+
+    def __unicode__(self):
+        return str(self.transactionId)
 
 '''
 class Goods(db.Model):
