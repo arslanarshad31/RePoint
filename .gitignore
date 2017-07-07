@@ -4,3 +4,7 @@ backend/bin
 backend/include
 *.pyc
 frontend/package-lock.json
+.idea/
+__pycache__/
+.DS_Store
+.directory
