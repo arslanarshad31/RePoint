@@ -9,7 +9,7 @@
     "react-router-dom": "^4.1.1",
     "react-scripts": "1.0.10",
     "redux": "^3.7.1",
-    "redux-thunk": "^2.2.0"
+    "redux-thunk": "^2.2.0",
     "semantic-ui-react": "^0.70.0"
   },
   "scripts": {
