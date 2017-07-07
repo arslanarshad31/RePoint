@@ -5,7 +5,6 @@ import thunk from 'redux-thunk';
 import { BrowserRouter as Router, Route } from 'react-router-dom';
 import rootReducer from './reducers'
 import Dashboard from './components/Dashboard'
-import PointConversion from './components/PointConversion';
 import 'semantic-ui-css/semantic.min.css';
 
 let initialState;
