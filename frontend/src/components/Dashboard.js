@@ -6,7 +6,7 @@ export default class Dashboard extends React.Component {
      const { accounts, banks } = this.props;
     return (
       <div>
-        {banks.map(bank => {
+        {banks.sort((a, b) => a.bankId> b.bankId).map(bank => {
           let account = accounts.filter(a => Number(a.bankId)===bank.bankId)[0];
           return <DashItem bank={bank} account={account}/>;
         })}
