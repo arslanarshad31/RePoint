@@ -21,16 +21,17 @@ class PromotionItem extends React.Component {
           borderRadius: "10px",
           backgroundColor: "#ffffff",
           boxShadow: "0 2px 18px 0 #e5e5e5",
-          height: "539px",
-          marginBottom: "15px"
+          margin: 'auto',
+          marginBottom: "15px",
+          width: '95%'
         }}
       >
-        <div
+        <img
+          src="https://dummyimage.com/600x300"
+          width='100%'
           style={{
-            height: "330px",
             borderTopLeftRadius: "10px",
             borderTopRightRadius: "10px",
-            background: "url('https://dummyimage.com/900x900') no-repeat",
             marginBottom: "15px"
           }}
         />
@@ -38,26 +39,24 @@ class PromotionItem extends React.Component {
           <div>
             <span
               style={{
-                fontSize: "4.37vh",
+                fontSize: "24px",
                 fontWeight: "bold",
-                letterSpacing: "-1px",
                 textAlign: "left",
                 color: "#4b4d5a"
               }}
             >
               Heading goes here
             </span>
-            <span style={{ float: "right" }}>B</span>
+            <img src="https://dummyimage.com/300x300" width="40" height="40" style={{ float: "right" }}/>
           </div>
           <div
             style={{
-              fontFamily: "SFUIText",
-              fontSize: "3.5vh",
+              fontSize: "14px",
               lineHeight: "1.1",
-              letterSpacing: "-0.9px",
               textAlign: "left",
               color: "#a9a9af",
-              marginTop: "15px"
+              marginTop: "15px",
+              marginBottom: '15px'
             }}
           >
             The city of southern California, san diego is locally known as

@@ -7,7 +7,7 @@ import Promotion from "./Promotion";
 export default class Top extends React.Component {
   constructor(props) {
     super();
-    this.state = { active: "DASHBOARD" };
+    this.state = { active: "PROMOTION" };
   }
   clickHandler(name) {
     this.setState({ active: name });
@@ -34,7 +34,6 @@ export default class Top extends React.Component {
     return (
       <div
         style={{
-          width: "auto",
           backGroundcolor: "#fafafa",
           paddingRight: '5px',
           paddingLeft: '5px'
