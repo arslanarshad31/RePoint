@@ -1,7 +1,9 @@
 import { combineReducers } from 'redux';
 import InitAppReducer from './InitApp'
+import PortfolioReducer from './PortfolioReducer'
 const rootReducer = combineReducers({
-    InitAppReducer
+    InitAppReducer,
+    PortfolioReducer
 });
 
 export default rootReducer;

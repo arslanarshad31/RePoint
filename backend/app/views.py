@@ -350,7 +350,8 @@ def portfolio():
 		"NAVReturnPercent":6,
 		"currentPrice":326.5164,
 		"dailyGainPercent":5,
-		"returnPercent":8
+		"returnPercent":8,
+		"return": 20058
 	})
 
 @app.route('/api/addAccounts/')

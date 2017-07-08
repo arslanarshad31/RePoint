@@ -1,57 +1,77 @@
 import React, { Component } from "react";
+import { connect } from "react-redux";
 import { Pie } from "react-chartjs-2";
 import { Message, Label, Accordion, Card } from "semantic-ui-react";
-
-export default class Portfolio extends Component {
+import getPortfolioData from "../actions/portfolio";
+import LoadPage from "./LoadPage"
+class Portfolio extends Component {
+  componentDidMount() {
+    console.log("Getting portfolio Data..");
+    this.props.getPortfolio();
+  }
   render() {
+    console.log(this.props.portData);
     const panels = this.props.stocks.map(s => ({
       key: s.stockId,
       title: <CustomLabel content={s.name} />,
-      content: <DetailsPanel content={s.name} />
+      content: <DetailsPanel portData={this.props.portData} content={s.name} />
     }));
-
-    return (
-      <div>
-        <div style={{
-          marginTop: '20px',
-          marginBottom: '20px'
-        }}>
-          <Pie
-            data={{
-              labels: [`Fixed Income`, `Equity`],
-              datasets: [
-                {
-                  data: [35, 42],
-                  backgroundColor: ["#46BFBD", "#93C953", "#F7464A"],
-                  hoverBackgroundColor: ["#5AD3D1", "#93C946", "#FF5A5E"]
+    if (this.props.portData == null) {
+      return <h3 style={{textAlign: "center"}}>Loading Data</h3>;
+    } else {
+      return (
+        <div>
+          <div
+            style={{
+              marginTop: "20px",
+              marginBottom: "20px"
+            }}
+          >
+            <Pie
+              data={{
+                labels: [`Fixed Income`, `Equity`],
+                datasets: [
+                  {
+                    data: [35, 42],
+                    backgroundColor: ["#46BFBD", "#93C953", "#F7464A"],
+                    hoverBackgroundColor: ["#5AD3D1", "#93C946", "#FF5A5E"]
+                  }
+                ]
+              }}
+              options={{
+                legend: {
+                  position: "bottom"
+                },
+                animation: {
+                  animateScale: true
                 }
-              ]
-            }}
-            options={{
-              legend: {
-                position: "bottom"
-              },
-              animation: {
-                animateScale: true
-              }
-            }}
-          />
-        <div style={{
-          textAlign: "center",
-          color: "#7d819a",
-          fontSize: '18px',
-          marginTop: '20px',
-        }}>NAV as of Today: <b>HKD 1,000</b></div>
-        <div style={{
-          textAlign: "center",
-          color: "#7d819a",
-          fontSize: '18px',
-          marginTop: '10px',
-        }}>NAV Return: <b>60%</b></div>
+              }}
+            />
+            <div
+              style={{
+                textAlign: "center",
+                color: "#7d819a",
+                fontSize: "18px",
+                marginTop: "20px"
+              }}
+            >
+              NAV as of Today: <b>HK${this.props.portData.NAVHKD}</b>
+            </div>
+            <div
+              style={{
+                textAlign: "center",
+                color: "#7d819a",
+                fontSize: "18px",
+                marginTop: "10px"
+              }}
+            >
+              NAV Return: <b>{this.props.portData.NAVReturnPercent}%</b>
+            </div>
+          </div>
+          <Accordion panels={panels} />
         </div>
-        <Accordion panels={panels}/>
-      </div>
-    );
+      );
+    }
   }
 }
 
@@ -70,16 +90,16 @@ class DetailsPanel extends Component {
         <div style={{ marginBottom: "10px" }}>
           - Current Price:{" "}
           <b>
-            HK$563
-            <span style={{ color: "green", paddingLeft: "10px" }}>+1.04%</span>
+            HK${this.props.portData.currentPrice}
+            <span style={{ color: "green", paddingLeft: "10px" }}>+{this.props.portData.dailyGainPercent}%</span>
           </b>
         </div>
 
         <div>
           - Your Returns:{" "}
           <b>
-            HK$20053
-            <span style={{ color: "red", paddingLeft: "10px" }}>-0.94%</span>
+            HK${this.props.portData.return}
+            <span style={{ color: "green", paddingLeft: "10px" }}>+{this.props.portData.returnPercent}%</span>
           </b>
         </div>
       </div>
@@ -109,3 +129,20 @@ class CustomLabel extends React.Component {
     );
   }
 }
+
+function mapStateToProps(state) {
+  console.log(state);
+  return {
+    portData: state.PortfolioReducer.data || null
+  };
+}
+
+function mapDispatchToProps(dispatch) {
+  return {
+    getPortfolio(data) {
+      dispatch(getPortfolioData(data));
+    }
+  };
+}
+
+export default connect(mapStateToProps, mapDispatchToProps)(Portfolio);
