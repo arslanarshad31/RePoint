@@ -56,6 +56,7 @@ export default class Portfolio extends Component {
 }
 
 class DetailsPanel extends Component {
+
   render() {
     return (
       <div
