@@ -44,7 +44,9 @@ class DashItem extends React.Component {
           style={{
             marginLeft: "20px",
             marginTop: "20px",
-            marginBottom: "10px"
+            marginBottom: "10px",
+            width: '100%',
+            marginRight: '15px'
           }}
         >
           <span
@@ -60,13 +62,25 @@ class DashItem extends React.Component {
           </span>
           <div
             style={{
-              marginTop: "10px",
+              marginTop: "5px",
               color: "#7d819a"
             }}
           >
             <div>Account number:</div>
             <div>Account number:</div>
             <div>Account number:</div>
+            <div
+              style={{
+                fontSize: "14px",
+                fontWeight: "bold",
+                textAlign: "left",
+                color: "#005cff",
+                float: 'right',
+                marginTop: '10px'
+              }}
+            >
+              Invest Now >
+            </div>
           </div>
         </div>
       </div>

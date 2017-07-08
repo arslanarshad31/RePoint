@@ -9,7 +9,7 @@ import InitApp from "../actions/InitApp"
 class TopComponent extends React.Component {
   constructor(props) {
     super();
-    this.state = { active: "PROMOTION" };
+    this.state = { active: "DASHBOARD" };
   }
   clickHandler(name) {
     this.setState({ active: name });
