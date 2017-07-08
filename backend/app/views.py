@@ -27,24 +27,31 @@ def index():
 	   	'/api/' : '/endpoints/',
 	   	'/api/users': "all users",
 	   	'/api/users/<username>': 'for this user',
+	   	'/api/accounts': "all accounts",
 	   	'/api/accounts/<username>' : 'account of users',
-	   	'/api/all' : 'RETURN EVERYTHING'
+	   	'/api/banks': "all banks #cant be bothered yet",
+	   	'/api/banks/<username> #cant be bothered yet': 'account of users',
+	   	'/api/all' : 'Return everything',
+	   	'/api/clear': 'Clear all tables completely',
+	   	'/api/addUsers/{n : n < 200}': 'Add n bullshit users',
+		'/api/addBanks': 'Add the main banks',
+	   '/api/addAccounts': 'Generate a random number of accounts (a : 0 < a <= numBanks) for every user',
+	   '/api/allForUser': 'Return everything for a given user'
    })
 
 @app.route('/api/users/')
 @app.route('/api/users/<username>')
 def get_user(username=None):
-	
 	if username is not None:
 		user = User.query.filter_by(username = username).all()
 		if len(user) > 0 :
-		    data = user[0].getdata()
+		    data = user[0].getData()
 		    return jsonify(data)
 		return jsonify({})
 
 	data = User.query.all()
 
-	data = [x.getdata() for x in data]
+	data = [x.getData() for x in data]
 	return jsonify(data)
 
 @app.route('/api/accounts/')
@@ -55,18 +62,133 @@ def get_username_for_account(username=None):
 
 	allAccount = Account.query.filter_by(username= username).all()
 	if len(allAccount)> 0:
-		data = [  x.getdata() for x in allAccount]
+		data = [  x.getData() for x in allAccount]
 		return jsonify(data)
 
 	return jsonify({})
 
 @app.route('/api/all/')
-def get_all():
-	userData = [user.getdata() for user in User.query.all()]
-	accountData = [account.getdata() for account in Account.query.all()]
-	bankData = []
-	return jsonify({'users': userData, 'accounts': accountData, 'banks': bankData})
-#     if file and allowed_file((file.filename).lower()):
+@app.route('/api/all/<username>')
+def get_all(username=None):
+	if(username is not None):
+		print("temp")
+	userData = [user.getData() for user in User.query.all()]
+	accountData = [account.getData() for account in Account.query.all()]
+	bankData = [bank.getData() for bank in Bank.query.all()]
+	productData = [product.getData() for product in Product.query.all()]
+	transactionData = [transaction.getData() for transaction in Transaction.query.all()]
+	return jsonify({'users': userData, 'accounts': accountData, 'banks': bankData, 'products': productData, 'transactions': transactionData})
+
+@app.route('/api/clear/')
+def clear():
+	tables = [User, Account, Bank, Product, Transaction]
+	allTableEntries = [table.query.all() for table in tables]
+	deletions = {type(tables[i]()).__name__ + "NumDeletions": len(allTableEntries[i]) for i in range(len(tables))}
+	for tableEntries in allTableEntries:
+		for entry in tableEntries:
+			db.session.delete(entry)
+	db.session.commit()
+	return jsonify(deletions)
+
+@app.route('/api/addUsers/')
+@app.route('/api/addUsers/<number>')
+def addUsers(number=None):
+	txt = ""
+	with open('users.json') as usersFile:
+		users = json.load(usersFile)
+		if number is not None:
+			number = int(number)
+			if number < len(users):
+				users = users[:number:]
+		for user in users:
+			newEntry = User()
+			newEntry.define(user)
+			db.session.add(newEntry)
+		try:
+			db.session.commit()
+			txt = "Successfully added " + str(len(users)) + " users!"
+		except:
+			txt = "Failed."
+	return jsonify({"result": txt})
+
+@app.route('/api/addBanks/')
+def addBanks():
+	banks = [
+				{
+					'bankId':1,
+					'name': 'HSBC',
+					'logoURL': 'https://s-media-cache-ak0.pinimg.com/originals/ff/28/8c/ff288c6e973cd6c9803b117371d27068.jpg'
+				},
+				{
+					'bankId':2,
+					'name': 'Citibank',
+					'logoURL': 'http://logok.org/wp-content/uploads/2014/04/Citibank-logo.png'
+				},
+				{
+					'bankId': 3,
+					'name': 'Hang Seng Bank',
+					'logoURL': 'https://content.jobsdb.com/Content/CmsContent/Logo/HK/JobsDBFiles/CompanyLogo/3071-0.gif'
+				},
+				{
+					'bankId': 4,
+					'name': 'Bank of East Asia',
+					'logoURL': 'http://www.sayyestobreastfeeding.hk/wp-content/uploads/08-resize.png'
+				}
+			]
+	for bank in banks:
+		newEntry = Bank()
+		newEntry.define(bank)
+		db.session.add(newEntry)
+	txt = ""
+	try:
+		db.session.commit()
+		txt = "Successfully added " + str(len(banks)) + " banks!"
+	except:
+		txt = "Failed"
+	return jsonify({"result": txt})
+
+@app.route('/api/addAccounts/')
+def addAccounts():
+	numBanks = len(Bank.query.all())
+	users = [user.getData() for user in User.query.all()]
+	banksForUsers = [np.random.choice(numBanks, np.random.randint(1, numBanks + 1, 1)[0], replace=False) + 1 for user in users]
+	numAccounts = sum([len(banks) for banks in banksForUsers])
+	accountNumbersDict = {}
+	while(len(accountNumbersDict) < numAccounts):
+		accountNumber = ''.join([chr(num + ord('0')) for num in np.random.randint(0, 10, 16)])
+		accountNumbersDict[accountNumber] = 'a'
+	accountNumbersList = accountNumbersDict.keys()
+	accountNum = 0
+	for userNum in range(len(users)):
+		for bankId in banksForUsers[userNum]:
+			newEntry = Account()
+			newEntry.define(
+				accountNumbersList[accountNum],
+				users[userNum]['userId'],
+				bankId,
+				float(np.random.randint(0, 10**8))/100,
+				np.random.randint(0, 10**5)
+			)
+			db.session.add(newEntry)
+			accountNum += 1
+	txt = ""
+	try:
+		db.session.commit()
+		txt = "Successfully added " + str(accountNum) + " accounts!"
+	except:
+		txt = "Failed"
+	return jsonify({"result": txt})
+
+@app.route('/api/allForUser/<username>')
+def allForUser(username = None):
+	if(username is None):
+		return jsonify({})
+	user = User.query.filter_by(userId = username).first().getData()
+	accounts = [account.getData() for account in Account.query.filter_by(userId = username)]
+	relevantBanks = [bank.getData() for bank in Bank.query.filter(Bank.bankId.in_([account['bankId'] for account in accounts])).all()]
+	return jsonify({"user": user, "accounts": accounts, "relevantBanks": relevantBanks})
+
+		#     if file and allowed_file((file.filename).lower()):
 #         filename = secure_filename(file.filename).lower()
 #         t= file.save(os.path.join(app.config['UPLOAD_FOLDER'], filename))
 #         return jsonify({
