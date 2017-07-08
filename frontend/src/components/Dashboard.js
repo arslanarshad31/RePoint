@@ -3,14 +3,12 @@ import { Button, Card, Image } from "semantic-ui-react";
 
 export default class Dashboard extends React.Component {
   render() {
+     const { accounts, banks } = this.props;
     return (
       <div>
-        {[
-          { name: "SC", pts: 1000 },
-          { name: "HSBC", pts: 1000 },
-          { name: "CITI", pts: 500 }
-        ].map(val => {
-          return <DashItem name={val.name} pts={val.pts} />;
+        {banks.map(bank => {
+          let account = accounts[0];
+          return <DashItem bank={bank} account={account}/>;
         })}
       </div>
     );
@@ -19,6 +17,7 @@ export default class Dashboard extends React.Component {
 
 class DashItem extends React.Component {
   render() {
+    const {bank, account} = this.props;
     return (
       <div
         style={{
@@ -32,7 +31,7 @@ class DashItem extends React.Component {
         }}
       >
         <img
-          src="https://dummyimage.com/400x400/000/fff"
+          src={bank.logoURL}
           width="70px"
           height="70px"
           style={{
@@ -58,7 +57,7 @@ class DashItem extends React.Component {
               color: "#4b4d5a"
             }}
           >
-            Societe General
+            {bank.name}
           </span>
           <div
             style={{
@@ -66,9 +65,9 @@ class DashItem extends React.Component {
               color: "#7d819a"
             }}
           >
-            <div>Account number:</div>
-            <div>Account number:</div>
-            <div>Account number:</div>
+            <div>A/C No: {account.accountNumber}</div>
+            <div>Points: {account.points.toLocaleString()}</div>
+            <div>Redeemable Value: {Number(account.balance/100).toLocaleString() + " HKD"} </div>
             <div
               style={{
                 fontSize: "14px",
