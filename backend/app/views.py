@@ -34,7 +34,7 @@ def index():
 	   	'/api/all' : 'Return everything',
 	   	'/api/clear': 'Clear all tables completely',
 	   	'/api/addUsers/{n : n < 200}': 'Add n bullshit users',
-		  '/api/addBanks': 'Add the main banks',
+		'/api/addBanks': 'Add the main banks',
 	    '/api/addAccounts': 'Generate a random number of accounts (a : 0 < a <= numBanks) for every user',
 	    '/api/allForUser': 'Return everything for a given user',
 	   	'/api/accounts/<accountNumber>' : 'details of account number',
