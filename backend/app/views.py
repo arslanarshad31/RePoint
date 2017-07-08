@@ -35,6 +35,7 @@ def index():
 	   	'/api/clear': 'Clear all tables completely',
 	   	'/api/addUsers/{n : n < 200}': 'Add n bullshit users',
 		'/api/addBanks': 'Add the main banks',
+	   '/api/addProducts': 'Add mock products',
 	    '/api/addAccounts': 'Generate a random number of accounts (a : 0 < a <= numBanks) for every user',
 	    '/api/allForUser': 'Return everything for a given user',
 	   	'/api/accounts/<accountNumber>' : 'details of account number',
@@ -102,16 +103,10 @@ def get_username_for_account(username=None):
 
 
 @app.route('/api/all/')
-@app.route('/api/all/<username>')
-def get_all(username=None):
-	if(username is not None):
-		print("temp")
-	userData = [user.getData() for user in User.query.all()]
-	accountData = [account.getData() for account in Account.query.all()]
-	bankData = [bank.getData() for bank in Bank.query.all()]
-	productData = [product.getData() for product in Product.query.all()]
-	transactionData = [transaction.getData() for transaction in Transaction.query.all()]
-	return jsonify({'users': userData, 'accounts': accountData, 'banks': bankData, 'products': productData, 'transactions': transactionData})
+def all():
+	tables = [User, Account, Bank, Product, Transaction]
+	allTableEntries = [[item.getData() for item in table.query.all()] for table in tables]
+	return jsonify({type(tables[i]()).__name__: allTableEntries[i] for i in range(len(tables))})
 
 @app.route('/api/clear/')
 def clear():
@@ -167,6 +162,11 @@ def addBanks():
 					'bankId': 4,
 					'name': 'Bank of East Asia',
 					'logoURL': 'http://www.sayyestobreastfeeding.hk/wp-content/uploads/08-resize.png'
+				},
+				{
+					'bankId': 5,
+					'name': 'Societe General',
+					'logoURL': 'http://static5.businessinsider.com/image/533404a76da8119b6ffec9cb-1200-800/chinaxijinping.jpg'
 				}
 			]
 	for bank in banks:
@@ -177,6 +177,82 @@ def addBanks():
 	try:
 		db.session.commit()
 		txt = "Successfully added " + str(len(banks)) + " banks!"
+	except:
+		txt = "Failed"
+	return jsonify({"result": txt})
+
+@app.route('/api/addProducts/')
+def addProducts():
+	products = [
+				{
+					"productId": 1,
+					"name": "MacBook Pro",
+					"bankId": 5,
+					"originalPrice": "400,300 points",
+					"saleOngoing": True,
+					"salePrice": "197,800 points",
+					"saleEnd": None,
+					"imageURL": "https://cdn.macrumors.com/article-new/2013/09/macbookpronotouchbar.jpg"
+				},
+				{
+					"productId": 2,
+					"name": "Beats Solo3 Wireless",
+					"bankId": 5,
+					"originalPrice": "154,300 points",
+					"saleOngoing": True,
+					"salePrice": "86,800 points",
+					"saleEnd": None,
+					"imageURL": "https://i01.hsncdn.com/is/image/HomeShoppingNetwork/prodfull/beats-solo3-on-ear-bluetooth-wireless-headphones-d-20161018155338967~517570_alt3.jpg"
+				},
+				{
+					"productId": 3,
+					"name": "Mi Air Purifier",
+					"bankId": 2,
+					"originalPrice": "121,980 points",
+					"saleOngoing": True,
+					"salePrice": "44,000 points",
+					"saleEnd": None,
+					"imageURL": "https://gloimg.gearbest.com/gb/pdm-product-pic/Electronic/2017/02/10/goods-img/1487211722861779920.jpg"
+				},
+				{
+					"productId": 4,
+					"name": "Flux-bike",
+					"bankId": 2,
+					"originalPrice": "200,300 points",
+					"saleOngoing": True,
+					"salePrice": "112,140 points",
+					"saleEnd": None,
+					"imageURL": "http://www.opusbike.com/DATA/PRODUITIMAGE/611.jpg"
+				},
+				{
+					"productId": 5,
+					"name": "iPhone 6 + 7",
+					"bankId": 1,
+					"originalPrice": "121,080 points",
+					"saleOngoing": True,
+					"salePrice": "44,000 points",
+					"saleEnd": None,
+					"imageURL": "http://actualapple.com/wp-content/uploads/2016/09/afb85c35dcb5f4eaa674b99a9f19e56e.jpg"
+				},
+				{
+					"productId": 6,
+					"name": "Gillete Fusion Styler",
+					"bankId": 1,
+					"originalPrice": "78,000 points",
+					"saleOngoing": True,
+					"salePrice": "10,000 points",
+					"saleEnd": "BULLSHIT_DATE",
+					"imageURL": "https://static.chemistwarehouse.com.au/ams/media/pi/67314/ADD10_800.jpg"
+				}
+			]
+	for product in products:
+		newEntry = Product()
+		newEntry.define(product)
+		db.session.add(newEntry)
+	txt = ""
+	try:
+		db.session.commit()
+		txt = "Successfully added " + str(len(products)) + " products!"
 	except:
 		txt = "Failed"
 	return jsonify({"result": txt})
