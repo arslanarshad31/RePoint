@@ -1,16 +1,31 @@
 import React from "react";
+import InvestModal from "./InvestModal"
 import { Button, Card, Image } from "semantic-ui-react";
 
 export default class Dashboard extends React.Component {
+  state = {modalContent: false}
+  modalHandler(name){
+    // console.log(name+"ssss")
+    // return (e) => {
+      console.log(name)
+      this.setState({modalContent: name})
+      console.log(this.state.modalContent)
+    //}
+  }
+  modalCloseHandler(){
+    console.log("modalCloseHandler clicked")
+    this.setState({modalContent: false})
+  }
   render() {
      const { accounts, banks } = this.props;
     return (
       <div>
         {banks.sort((a, b) => a.bankId> b.bankId).map(bank => {
           let account = accounts.filter(a => Number(a.bankId)===bank.bankId)[0];
-          return <DashItem bank={bank} account={account}/>;
+          return <DashItem bank={bank} account={account} modalHandler={this.modalHandler.bind(this)}/>;
         })}
-      </div>
+        <InvestModal popen={this.state.modalContent} clh = {this.modalCloseHandler.bind(this)}/>
+      </div> 
     );
   }
 }
@@ -68,7 +83,7 @@ class DashItem extends React.Component {
             <div>A/C No: {account.accountNumber}</div>
             <div>Points: {account.points.toLocaleString()}</div>
             <div><b>Redeemable Value: </b> {Number(account.balance/100).toLocaleString() + " HKD"} </div>
-            <div
+            <div onClick={e => this.props.modalHandler(this.props.name)}
               style={{
                 fontSize: "14px",
                 fontWeight: "bold",
@@ -82,7 +97,9 @@ class DashItem extends React.Component {
             </div>
           </div>
         </div>
+        
       </div>
     );
   }
 }
+
