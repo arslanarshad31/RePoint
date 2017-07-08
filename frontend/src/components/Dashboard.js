@@ -80,8 +80,8 @@ class DashItem extends React.Component {
               color: "#7d819a"
             }}
           >
-            <div>A/C No: {account.accountNumber}</div>
-            <div>Points: {account.points.toLocaleString()}</div>
+            <div><b>A/C No:</b> {account.accountNumber}</div>
+            <div><b>Points:</b> {account.points.toLocaleString()}</div>
             <div><b>Redeemable Value: </b> {Number(account.balance/100).toLocaleString() + " HKD"} </div>
             <div onClick={e => this.props.modalHandler(this.props.name)}
               style={{
