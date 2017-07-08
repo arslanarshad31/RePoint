@@ -15,7 +15,7 @@ if (typeof window !== "undefined") {
 }
 
 const store = createStore(
-  combineReducers({ main: rootReducer }),
+  rootReducer,
   initialState,
   applyMiddleware(thunk)
 );
