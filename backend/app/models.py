@@ -35,7 +35,7 @@ class User(db.Model):
         return (self.username)
 
 class Account(db.Model):
-    __tablename__ = 'AccountTable'
+    __tablename__ = 'accounts'
     __searchable__ = ['accountNumber', 'bankId']
 
     accountNumber = db.Column(db.Integer, primary_key=True)
@@ -44,7 +44,6 @@ class Account(db.Model):
     balance = db.Column(db.Float)
     points = db.Column(db.Integer)
     expiry = db.Column(db.Date)
-    rate = db.Column(db.Float)
 
     def Promotion(self):
         testField = "testForNow"
@@ -55,8 +54,7 @@ class Account(db.Model):
             'userId': self.userId,
             'bankId': self.bankId,
             'balance': self.balance,
-            'points': self.points,
-            'rate': self.rate
+            'points': self.points
         }
 
     def __repr__(self):

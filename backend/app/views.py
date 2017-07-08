@@ -27,7 +27,8 @@ def index():
 	   	'/api/' : '/endpoints/',
 	   	'/api/users': "all users",
 	   	'/api/users/<username>': 'for this user',
-	   	'/api/accounts/<username>' : 'account of users'
+	   	'/api/accounts/<username>' : 'account of users',
+	   	'/api/all' : 'RETURN EVERYTHING'
    })
 
 @app.route('/api/users/')
@@ -46,21 +47,25 @@ def get_user(username=None):
 	data = [x.getdata() for x in data]
 	return jsonify(data)
 
-
 @app.route('/api/accounts/')
 @app.route('/api/accounts/<username>')
 def get_username_for_account(username=None):
 	if username is None :
 		return jsonify({})
 
-	allacount = Accounts.query.filter_by(username= username).all()
-	if len(allacount)> 0:
-		data = [  x.getdata() for x in allacount]
+	allAccount = Account.query.filter_by(username= username).all()
+	if len(allAccount)> 0:
+		data = [  x.getdata() for x in allAccount]
 		return jsonify(data)
 
 	return jsonify({})
 
-
+@app.route('/api/all/')
+def get_all():
+	userData = [user.getdata() for user in User.query.all()]
+	accountData = [account.getdata() for account in Account.query.all()]
+	bankData = []
+	return jsonify({'users': userData, 'accounts': accountData, 'banks': bankData})
 #     if file and allowed_file((file.filename).lower()):
 #         filename = secure_filename(file.filename).lower()
 #         t= file.save(os.path.join(app.config['UPLOAD_FOLDER'], filename))
