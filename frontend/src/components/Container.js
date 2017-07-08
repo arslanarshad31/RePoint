@@ -5,7 +5,7 @@ import Portfolio from "./Portfolio";
 import Shop from "./Shop";
 import LoadPage from "./LoadPage";
 import Promotions from "./Promotions";
-import InitApp from "../actions"
+import InitApp from "../actions/index"
 
 class Container extends React.Component {
   constructor(props) {
