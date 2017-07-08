@@ -37,8 +37,10 @@ class TopComponent extends React.Component {
         case "PROMOTION":
           content = <Promotion />;
           break;
+        default:
+          break;
       }
-
+  
     return (
       <div
         style={{
@@ -47,9 +49,6 @@ class TopComponent extends React.Component {
           paddingLeft: '5px'
         }}
       >
-        <div style={{
-          backgroundColor: "#ffffff"
-        }}>
           <div style={{ textAlign: "center" }}>
             <img
               style={{
@@ -118,8 +117,8 @@ class TopComponent extends React.Component {
   }
 }
 
+
 class NavItem extends React.Component {
-  componentDidUpdate(prevProps, prevState) {}
   render() {
     let style = {};
     if (this.props.active) {
