@@ -67,7 +67,7 @@ class ShopItem extends React.Component {
             marginLeft: "10px"
           }}
         >
-          {originalPrice}
+          <strike>{originalPrice}</strike>
         </div>
         <div
           style={{
