@@ -1,8 +1,8 @@
 import React, { Component } from "react";
-import Dashboard from './Dashboard';
-import Portfolio from './Portfolio';
-import Shop from './Shop';
-import Promotion from './Promotions'
+import Dashboard from "./Dashboard";
+import Portfolio from "./Portfolio";
+import Shop from "./Shop";
+import Promotion from "./Promotion";
 
 export default class Top extends React.Component {
   constructor(props) {
@@ -13,73 +13,82 @@ export default class Top extends React.Component {
     this.setState({ active: name });
   }
   render() {
-    console.log(this.state.active)
+    console.log(this.state.active);
 
     let content = null;
-    switch(this.state.active) {
-      case 'DASHBOARD':
-        content = <Dashboard/>
-      case 'PORTFOLIO':
-        content = <Portfolio/>
-      case 'SHOP':
-        content = <Shop/>
-      case 'PROMOTION':
-        content = <Promotion/>
-      default:
-        content = <Shop/>
+    switch (this.state.active) {
+      case "DASHBOARD":
+        content = <Dashboard />;
+        break;
+      case "PORTFOLIO":
+        content = <Portfolio />;
+        break;
+      case "SHOP":
+        content = <Shop />;
+        break;
+      case "PROMOTION":
+        content = <Promotion />;
+        break;
     }
 
     return (
       <div
         style={{
           width: "auto",
-          height: "167px",
-          backgroundColor: "#ffffff",
+          backGroundcolor: "#fafafa",
+          paddingRight: '5px',
+          paddingLeft: '5px'
         }}
       >
-        <div style={{ textAlign: 'center' }}>
-          <img
-            style={{
-              width: "40%",
-              margin: "auto",
-              marginTop: "20px",
-              marginRight: "10px"
-            }}
-            src="imgs/ic-logo@2x.png"
-          />
-        </div>
         <div style={{
-          display: 'flex',
-          flexBasis: '100%',
-          marginTop: '20px',
-          width: '100%',
-          marginBottom: '10px'
+          backgroundColor: "#ffffff"
         }}>
-          <NavItem
-            cl={e => this.clickHandler("DASHBOARD")}
-            active={this.state.active == "DASHBOARD"}
-            name="DASHBOARD"
-          />
+          <div style={{ textAlign: "center" }}>
+            <img
+              style={{
+                width: "40%",
+                margin: "auto",
+                marginTop: "20px",
+                marginRight: "10px"
+              }}
+              src="imgs/ic-logo@2x.png"
+            />
+          </div>
+          <div
+            style={{
+              display: "flex",
+              flexBasis: "100%",
+              marginTop: "20px",
+              width: "100%",
+              marginBottom: "10px"
+            }}
+          >
+            <NavItem
+              cl={e => this.clickHandler("DASHBOARD")}
+              active={this.state.active == "DASHBOARD"}
+              name="DASHBOARD"
+            />
 
-          <NavItem
-            cl={e => this.clickHandler("PORTFOLIO")}
-            active={this.state.active == "PORTFOLIO"}
-            name="PORTFOLIO"
-          />
+            <NavItem
+              cl={e => this.clickHandler("PORTFOLIO")}
+              active={this.state.active == "PORTFOLIO"}
+              name="PORTFOLIO"
+            />
 
-          <NavItem
-            cl={e => this.clickHandler("SHOP")}
-            active={this.state.active == "SHOP"}
-            name="SHOP"
-          />
+            <NavItem
+              cl={e => this.clickHandler("SHOP")}
+              active={this.state.active == "SHOP"}
+              name="SHOP"
+            />
 
-          <NavItem
-            cl={e => this.clickHandler("PROMOTION")}
-            active={this.state.active == "PROMOTION"}
-            name="PROMOTION"
-          />
+            <NavItem
+              cl={e => this.clickHandler("PROMOTION")}
+              active={this.state.active == "PROMOTION"}
+              name="PROMOTION"
+            />
+          </div>
         </div>
-        { content } 
+        {content}
       </div>
     );
   }
@@ -96,7 +105,7 @@ class NavItem extends React.Component {
         textAlign: "center",
         color: "#7d819a",
         margin: "0 5px",
-        paddingBottom: "6px",
+        paddingBottom: "6px"
       };
     } else {
       style = {
@@ -104,7 +113,7 @@ class NavItem extends React.Component {
         fontSize: "14px",
         textAlign: "center",
         color: "#c8c9cd",
-        paddingBottom: "6px",
+        paddingBottom: "6px"
       };
     }
     return (

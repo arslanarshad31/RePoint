@@ -4,7 +4,7 @@ import { Button, Card, Image } from "semantic-ui-react";
 export default class Dashboard extends React.Component {
   render() {
     return (
-      <Card.Group>
+      <div>
         {[
           { name: "SC", pts: 1000 },
           { name: "HSBC", pts: 1000 },
@@ -12,7 +12,7 @@ export default class Dashboard extends React.Component {
         ].map(val => {
           return <DashItem name={val.name} pts={val.pts} />;
         })}
-      </Card.Group>
+      </div>
     );
   }
 }
@@ -60,13 +60,14 @@ class DashItem extends React.Component {
           </span>
           <div
             style={{
-              marginTop: "10px"
+              marginTop: "10px",
+              color: "#7d819a"
             }}
           >
-            Account number:
+            <div>Account number:</div>
+            <div>Account number:</div>
+            <div>Account number:</div>
           </div>
-          <div>Account number:</div>
-          <div>Account number:</div>
         </div>
       </div>
     );
