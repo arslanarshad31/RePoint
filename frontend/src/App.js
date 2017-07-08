@@ -54,22 +54,14 @@ class Top extends React.Component {
           />
         </div>
         <div id="navbar">
-          <table border="0">
-            <tr>
-              <td>
+
                 <NavItem cl={(e) => this.clickHandler("DASHBOARD")} active={this.state.active == "DASHBOARD"} name="DASHBOARD" />
-              </td>
-              <td>
+
                 <NavItem cl={(e) => this.clickHandler("PORTFOLIO")} active={this.state.active == "PORTFOLIO"} name="PORTFOLIO" />
-              </td>
-              <td>
+
                 <NavItem cl={(e) => this.clickHandler("SHOP")} active={this.state.active == "SHOP"} name="SHOP" />
-              </td>
-              <td>
+
                 <NavItem cl={(e) => this.clickHandler("PROMOTION")} active={this.state.active == "PROMOTION"} name="PROMOTION" />
-              </td>
-            </tr>
-          </table>
         </div>
       </div>
     );
@@ -90,7 +82,8 @@ class NavItem extends React.Component {
         textAlign: "center",
         color: "#7d819a",
         margin: "0 10px",
-        paddingBottom: "16px"
+        paddingBottom: "16px",
+        display:"inline-block"
       };
     } else {
       style = {
@@ -99,7 +92,8 @@ class NavItem extends React.Component {
         letterSpacing: "-0.8px",
         textAlign: "center",
         color: "#c8c9cd",
-        paddingBottom: "20px"
+        paddingBottom: "20px",
+        display:"inline-block"
       };
     }
     return (
