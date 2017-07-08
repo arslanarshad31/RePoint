@@ -6,8 +6,8 @@ export default class Dashboard extends React.Component {
      const { accounts, banks } = this.props;
     return (
       <div>
-        {banks.map(bank => {
-          let account = accounts[0];
+        {banks.sort((a, b) => a.bankId> b.bankId).map(bank => {
+          let account = accounts.filter(a => Number(a.bankId)===bank.bankId)[0];
           return <DashItem bank={bank} account={account}/>;
         })}
       </div>
@@ -67,7 +67,7 @@ class DashItem extends React.Component {
           >
             <div>A/C No: {account.accountNumber}</div>
             <div>Points: {account.points.toLocaleString()}</div>
-            <div>Redeemable Value: {Number(account.balance/100).toLocaleString() + " HKD"} </div>
+            <div><b>Redeemable Value: </b> {Number(account.balance/100).toLocaleString() + " HKD"} </div>
             <div
               style={{
                 fontSize: "14px",
