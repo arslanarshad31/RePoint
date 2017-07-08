@@ -10,7 +10,7 @@ import InitApp from "../actions/index"
 class Container extends React.Component {
   constructor(props) {
     super();
-    this.state = { active: "PORTFOLIO" };
+    this.state = { active: "DASHBOARD" };
   }
   clickHandler(name) {
     this.setState({ active: name });
@@ -29,7 +29,7 @@ class Container extends React.Component {
       let content = null;
       switch (this.state.active) {
         case "DASHBOARD":
-          content = <Dashboard accounts={Account} banks={Bank}/>
+          content = <Dashboard accounts={Account} banks={Bank} goToPortfolio={() => this.clickHandler('PORTFOLIO')}/>
           break;
         case "PORTFOLIO":
           content = <Portfolio stocks={Stock}/>;
@@ -110,7 +110,7 @@ class Container extends React.Component {
               />
             </div>
           </div>
-          <div style={{height: "150px"}}></div>
+          <div style={{height: "17vh"}}></div>
           {content}
         </div>
       );

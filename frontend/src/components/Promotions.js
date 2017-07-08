@@ -55,7 +55,8 @@ class PromotionItem extends React.Component {
           }}
         />
         <div style={{ padding: "5px 15px" }}>
-          <div>
+          <div >
+            <img src={this.props.vals.bankImageURL} width="40" height="40" style={{ float: "right" }}/>
             <span
               style={{
                 fontSize: "24px",
@@ -66,7 +67,7 @@ class PromotionItem extends React.Component {
             >
               {this.props.vals.name}
             </span>
-            <img src={this.props.vals.bankImageURL} width="40" height="40" style={{ float: "right" }}/>
+            
           </div>
           <div
             style={{
