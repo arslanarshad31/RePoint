@@ -1,12 +1,31 @@
 import React, { Component } from "react";
 import { Button, Card, Image, Item, Label, Icon } from "semantic-ui-react";
 
-export default class Promotion extends React.Component {
+export default class Promotions extends React.Component {
   render() {
+    console.log(this.props.promos)
+    let contents = this.props.promos.map(v => {
+      let newimage = v.imageURL
+      newimage = newimage.replace("assets/", "")
+      newimage = newimage.replace("_", "-")
+      return {
+        ...v,
+        imageURL: newimage,
+        bankImageURL: this.props.banks.find((e) => {
+
+          if (e["bankId"] == v["bankId"]) {
+            return true
+          }else{
+            return false
+          }
+        }).logoURL
+      }
+    }) 
+    console.log(contents)
     return (
       <Item.Group divided>
-        {["SC", "HSBC", "CITI"].map(v => {
-          return <PromotionItem />;
+        {contents.map(v => {
+          return <PromotionItem vals={v}/>;
         })}
       </Item.Group>
     );
@@ -27,7 +46,7 @@ class PromotionItem extends React.Component {
         }}
       >
         <img
-          src="https://dummyimage.com/600x300"
+          src={this.props.vals.imageURL}
           width='100%'
           style={{
             borderTopLeftRadius: "10px",
@@ -36,7 +55,8 @@ class PromotionItem extends React.Component {
           }}
         />
         <div style={{ padding: "5px 15px" }}>
-          <div>
+          <div >
+            <img src={this.props.vals.bankImageURL} width="40" height="40" style={{ float: "right" }}/>
             <span
               style={{
                 fontSize: "24px",
@@ -45,9 +65,9 @@ class PromotionItem extends React.Component {
                 color: "#4b4d5a"
               }}
             >
-              Heading goes here
+              {this.props.vals.name}
             </span>
-            <img src="https://dummyimage.com/300x300" width="40" height="40" style={{ float: "right" }}/>
+            
           </div>
           <div
             style={{
@@ -59,9 +79,7 @@ class PromotionItem extends React.Component {
               marginBottom: '15px'
             }}
           >
-            The city of southern California, san diego is locally known as
-            ‘America’s Finest City’. It’s located on San Diego Bay, an inlet of
-            the Pacific Ocean near the...
+            {this.props.vals.description}
           </div>
         </div>
       </div>

@@ -3,7 +3,8 @@ import { connect } from "react-redux";
 import Dashboard from "./Dashboard";
 import Portfolio from "./Portfolio";
 import Shop from "./Shop";
-import Promotion from "./Promotion";
+import LoadPage from "./LoadPage";
+import Promotions from "./Promotions";
 import InitApp from "../actions"
 
 class Container extends React.Component {
@@ -22,22 +23,22 @@ class Container extends React.Component {
     console.log(this.props);
 
     if (this.props.initialData === null) {
-      return <h3>LOADING</h3>;
+      return <LoadPage />;
     } else {
-      const { initialData: {Account, Bank, Product, Stock} } = this.props;
+      const { initialData: {Account, Bank, Product, Stock, Promotion} } = this.props;
       let content = null;
       switch (this.state.active) {
         case "DASHBOARD":
           content = <Dashboard accounts={Account} banks={Bank} goToPortfolio={() => this.clickHandler('PORTFOLIO')}/>
           break;
         case "PORTFOLIO":
-          content = <Portfolio stock={Stock}/>;
+          content = <Portfolio stocks={Stock}/>;
           break;
         case "SHOP":
           content = <Shop products={Product} banks={Bank}/>;
           break;
         case "PROMOTION":
-          content = <Promotion />;
+          content = <Promotions promos={Promotion} banks={Bank}/>;
           break;
         default:
           break;
@@ -46,13 +47,19 @@ class Container extends React.Component {
     return (
       <div
         style={{
-          backGroundcolor: "#fafafa",
+          backgroundColor: "#fafafa",
           paddingRight: '5px',
           paddingLeft: '5px'
         }}
       >
           <div
             style={{
+              width: "100%",
+              position: "fixed",
+              top: "0",
+              left: "0",
+              zIndex: "999",
+              padding: "0 15px",
               backgroundColor: "#ffffff"
             }}
           >
@@ -61,7 +68,7 @@ class Container extends React.Component {
                 style={{
                   width: "40%",
                   margin: "auto",
-                  marginTop: "20px",
+                  marginTop: "30px",
                   marginRight: "10px"
                 }}
                 src="imgs/ic-logo@2x.png"
@@ -71,9 +78,11 @@ class Container extends React.Component {
               style={{
                 display: "flex",
                 flexBasis: "100%",
-                marginTop: "20px",
+                justifyContent: "space-between",
+                marginTop: "25px",
                 width: "100%",
-                marginBottom: "10px"
+                marginBottom: "15px",
+                textAlign: "center"
               }}
             >
               <NavItem
@@ -101,6 +110,7 @@ class Container extends React.Component {
               />
             </div>
           </div>
+          <div style={{height: "17vh"}}></div>
           {content}
         </div>
       );
@@ -114,17 +124,17 @@ class NavItem extends React.Component {
     let style = {};
     if (this.props.active) {
       style = {
-        fontSize: "14px",
+        fontSize: "2.3vh",
         borderBottom: "2px solid #7d819a",
         textAlign: "center",
         color: "#7d819a",
         margin: "0 5px",
-        paddingBottom: "6px"
+        paddingBottom: "4px"
       };
     } else {
       style = {
         margin: "0 5px",
-        fontSize: "14px",
+        fontSize: "2.3vh",
         textAlign: "center",
         color: "#c8c9cd",
         paddingBottom: "6px"

@@ -4,7 +4,7 @@ import { Message, Label, Accordion, Card } from "semantic-ui-react";
 
 export default class Portfolio extends Component {
   render() {
-    const panels = this.props.stock.map(s => ({
+    const panels = this.props.stocks.map(s => ({
       key: s.stockId,
       title: <CustomLabel content={s.name} />,
       content: <DetailsPanel content={s.name} />

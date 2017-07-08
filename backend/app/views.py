@@ -28,6 +28,7 @@ def index():
 	   	'/api/users': "all users",
 	   	'/api/users/<username>': 'for this user',
 	   	'/api/accounts': "all accounts",
+	   	'/api/demoAccountData': "Mock accounts",
 	   	'/api/accounts/<username>' : 'account of users',
 	   	'/api/addStocks' : 'Add some random hardcoded stocks',
 	   	'/api/buyStocks' : 'Make account 1 purchase 2 units of stock 1',
@@ -36,6 +37,7 @@ def index():
 	   	'/api/all' : 'Return everything',
 	   	'/api/clear': 'Clear all tables completely',
 	   	'/api/addUsers/{n : n < 200}': 'Add n bullshit users',
+	   	'/api/portfolio/': 'Portfolio details',
 		'/api/addBanks': 'Add the main banks',
 	   	'/api/addProducts': 'Add mock products',
 	   	'/api/addPromotions': 'Add mock products',
@@ -47,6 +49,41 @@ def index():
 	   	'/api/accounts/<accountNumber>/<userid>/<bankId>/<balance>/<points>/<expiry>/<rate>/<username>/' : 'add acounts',
 	   	'/api/populate' : '->***** RESET ENTIRE DATABASE *****<-'
    })
+
+@app.route('/api/demoAccountData/')
+def demoAccountData():
+	return jsonify(
+				[
+					{
+						"bankId":5,
+						"accountNumber":"#1017-2020",
+						"points":65000,
+						"pointsPerHKD":100,
+						"redeemableValueHKD":650.00
+					},
+					{
+						"bankId": 2,
+						"accountNumber": "#2010-2032",
+						"points": 70000,
+						"pointsPerHKD": 165,
+						"redeemableValueHKD":424.24
+					},
+					{
+						"bankId": 1,
+						"accountNumber": "#2032-2054",
+						"points": 40000,
+						"pointsPerHKD": 42,
+						"redeemableValueHKD": 952.38
+					},
+					{
+						"bankId": 6,
+						"accountNumber": "#2050-2072",
+						"points": 50000,
+						"pointsPerHKD": 285,
+						"redeemableValueHKD": 175.44
+					}
+				]
+	)
 
 @app.route('/api/users/')
 @app.route('/api/users/uuid/<uuid>')
@@ -173,6 +210,11 @@ def addBanks():
 					'bankId': 5,
 					'name': 'Societe General',
 					'logoURL': 'http://www.bankingtech.com/files/2016/07/Soci%C3%A9t%C3%A9-G%C3%A9n%C3%A9rale.jpg'
+				},
+				{
+					'bankId': 6,
+					'name': 'Standard Chartered Bank',
+					'logoURL': 'http://www.bankingtech.com/files/2016/03/Standard-Chartered.jpeg'
 				}
 			]
 	for bank in banks:
@@ -198,7 +240,7 @@ def addProducts():
 					"saleOngoing": True,
 					"salePrice": "197,800 points",
 					"saleEnd": None,
-					"imageURL": "https://cdn.macrumors.com/article-new/2013/09/macbookpronotouchbar.jpg"
+					"imageURL": "54.255.134.151:5000/static/macbook.jpg"
 				},
 				{
 					"productId": 2,
@@ -208,7 +250,7 @@ def addProducts():
 					"saleOngoing": True,
 					"salePrice": "86,800 points",
 					"saleEnd": None,
-					"imageURL": "https://i01.hsncdn.com/is/image/HomeShoppingNetwork/prodfull/beats-solo3-on-ear-bluetooth-wireless-headphones-d-20161018155338967~517570_alt3.jpg"
+					"imageURL": "54.255.134.151:5000/static/headphones.jpg"
 				},
 				{
 					"productId": 3,
@@ -218,7 +260,7 @@ def addProducts():
 					"saleOngoing": True,
 					"salePrice": "44,000 points",
 					"saleEnd": None,
-					"imageURL": "https://gloimg.gearbest.com/gb/pdm-product-pic/Electronic/2017/02/10/goods-img/1487211722861779920.jpg"
+					"imageURL": "54.255.134.151:5000/static/airpurifier.jpg"
 				},
 				{
 					"productId": 4,
@@ -228,7 +270,7 @@ def addProducts():
 					"saleOngoing": True,
 					"salePrice": "112,140 points",
 					"saleEnd": None,
-					"imageURL": "http://www.opusbike.com/DATA/PRODUITIMAGE/611.jpg"
+					"imageURL": "54.255.134.151:5000/static/bike.jpg"
 				},
 				{
 					"productId": 5,
@@ -238,7 +280,7 @@ def addProducts():
 					"saleOngoing": True,
 					"salePrice": "44,000 points",
 					"saleEnd": None,
-					"imageURL": "http://actualapple.com/wp-content/uploads/2016/09/afb85c35dcb5f4eaa674b99a9f19e56e.jpg"
+					"imageURL": "54.255.134.151:5000/static/iphones.jpg"
 				},
 				{
 					"productId": 6,
@@ -248,7 +290,7 @@ def addProducts():
 					"saleOngoing": True,
 					"salePrice": "10,000 points",
 					"saleEnd": "BULLSHIT_DATE",
-					"imageURL": "https://static.chemistwarehouse.com.au/ams/media/pi/67314/ADD10_800.jpg"
+					"imageURL": "54.255.134.151:5000/static/shaver.jpg"
 				}
 			]
 	for product in products:
@@ -300,6 +342,16 @@ def addPromotions():
 	#except:
 	#txt = "Failed"
 	return jsonify({"result": txt})
+
+@app.route('/api/portfolio/')
+def portfolio():
+	return jsonify({
+		"NAVHKD":689,
+		"NAVReturnPercent":6,
+		"currentPrice":326.5164,
+		"dailyGainPercent":5,
+		"returnPercent":8
+	})
 
 @app.route('/api/addAccounts/')
 def addAccounts():
