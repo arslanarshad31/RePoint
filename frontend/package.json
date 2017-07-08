@@ -19,11 +19,12 @@
     "superagent": "^3.5.2",
     "whatwg-fetch": "^2.0.3"
   },
-  "proxy": "http://54.255.134.151:5000/",
+
   "scripts": {
     "start": "react-scripts start",
     "build": "react-scripts build",
     "test": "react-scripts test --env=jsdom",
     "eject": "react-scripts eject"
-  }
+  },
+   "disableHostCheck": true
 }
