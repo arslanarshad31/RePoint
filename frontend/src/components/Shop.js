@@ -4,11 +4,18 @@ import { Button, Card, Image, Item, Label, Icon } from "semantic-ui-react";
 export default class Shop extends React.Component {
   render() {
     return (
-      <div style={{ 
-        paddingLeft: '10px'
-       }}>
+      <div
+        style={{
+          paddingLeft: "10px",
+          display: "flex",
+          flexBasis: "100%",
+          flexWrap: "wrap",
+          justifyContent: "space-between"
+        }}
+      >
         {this.props.products.map(p => {
-          let bankImg = this.props.banks.filter(b => b.bankId===p.bankId)[0].logoURL
+          let bankImg = this.props.banks.filter(b => b.bankId === p.bankId)[0]
+            .logoURL;
           return <ShopItem {...p} bankImg={bankImg} />;
         })}
       </div>
@@ -18,7 +25,7 @@ export default class Shop extends React.Component {
 
 class ShopItem extends React.Component {
   render() {
-    const { imageURL, name, originalPrice, salePrice, bankImg} = this.props;
+    const { imageURL, name, originalPrice, salePrice, bankImg } = this.props;
     return (
       <div
         style={{
@@ -26,15 +33,15 @@ class ShopItem extends React.Component {
           backgroundColor: "#ffffff",
           boxShadow: "0 2px 18px 0 #e5e5e5",
           width: "46%",
-          position: 'relative',
+          position: "relative",
           marginBottom: "10px",
-          paddingBottom: '10px',
-          display: 'inline-block',
-          marginRight: '10px'
+          paddingBottom: "10px",
+          display: "inline-block",
+          marginRight: "10px"
         }}
       >
         <img
-          src={imageURL}
+          src={"http://"+imageURL}
           style={{
             width: "100%",
             borderTopLeftRadius: "10px",
@@ -74,12 +81,12 @@ class ShopItem extends React.Component {
         </div>
         <img
           src={bankImg}
-          width ='35px'
-          height = '35px'
+          width="35px"
+          height="35px"
           style={{
             position: "absolute",
-            bottom: '12px',
-            right: '10px'
+            bottom: "12px",
+            right: "10px"
           }}
         />
       </div>
