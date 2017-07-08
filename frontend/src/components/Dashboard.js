@@ -20,28 +20,55 @@ export default class Dashboard extends React.Component {
 class DashItem extends React.Component {
   render() {
     return (
-      <Card style={{ margin: "10px auto", width: "90%" }}>
-        <Card.Content>
-          <Image
-            floated="right"
-            src="https://dummyimage.com/200x200"
-          />
-          <Card.Header>
-            {this.props.name}
-          </Card.Header>
-          <Card.Meta><strong>Account:</strong> 85297023133</Card.Meta>
-        </Card.Content>
-        <Card.Content extra>
-          <Button primary size="medium" style={{ position: 'absolute', right: '10px' }}>
-            Invest
-          </Button>
-          <h1 style={{ margin: "0px" }}>1000 Points</h1>
-          <div>
-            <h3 style={{ margin: "0px" }} >1 point = HK$10</h3>
-            <h3 style={{ margin: "0px" }} >Reedamble Money: 1000HKD</h3>
+      <div
+        style={{
+          margin: "10px auto",
+          width: "95%",
+          display: "flex",
+          flexDirection: "row",
+          borderRadius: "10px",
+          backgroundColor: "#ffffff",
+          boxShadow: "0 2px 18px 0 #e5e5e5"
+        }}
+      >
+        <img
+          src="https://dummyimage.com/400x400/000/fff"
+          width="70px"
+          height="70px"
+          style={{
+            marginLeft: "20px",
+            marginTop: "20px"
+          }}
+        />
+        <div
+          style={{
+            marginLeft: "20px",
+            marginTop: "20px",
+            marginBottom: "10px"
+          }}
+        >
+          <span
+            style={{
+              fontSize: "20px",
+              fontWeight: "bold",
+              letterSpacing: "-0.2px",
+              textAlign: "left",
+              color: "#4b4d5a"
+            }}
+          >
+            Societe General
+          </span>
+          <div
+            style={{
+              marginTop: "10px"
+            }}
+          >
+            Account number:
           </div>
-        </Card.Content>
-      </Card>
+          <div>Account number:</div>
+          <div>Account number:</div>
+        </div>
+      </div>
     );
   }
 }
