@@ -98,7 +98,7 @@ class DetailsPanel extends Component {
         <div>
           - Your Returns:{" "}
           <b>
-            HK$20053
+            HK${this.props.portData.return}
             <span style={{ color: "green", paddingLeft: "10px" }}>+{this.props.portData.returnPercent}%</span>
           </b>
         </div>
