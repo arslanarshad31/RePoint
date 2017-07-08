@@ -4,7 +4,9 @@ import { Button, Card, Image, Item, Label, Icon } from "semantic-ui-react";
 export default class Shop extends React.Component {
   render() {
     return (
-      <div>
+      <div style={{ 
+        paddingLeft: '10px'
+       }}>
         {["SC", "HSBC", "CITI"].map(v => {
           return <ShopItem />;
         })}
@@ -22,7 +24,7 @@ class ShopItem extends React.Component {
           borderRadius: "10px",
           backgroundColor: "#ffffff",
           boxShadow: "0 2px 18px 0 #e5e5e5",
-          width: "45%",
+          width: "46%",
           position: 'relative',
           marginBottom: "10px",
           paddingBottom: '10px',
@@ -34,7 +36,8 @@ class ShopItem extends React.Component {
           src="https://dummyimage.com/400x400"
           style={{
             width: "100%",
-            borderRadius: "10px"
+            borderTopLeftRadius: "10px",
+            borderTopRightRadius: "10px"
           }}
         />
         <div

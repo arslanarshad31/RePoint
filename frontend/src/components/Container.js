@@ -9,7 +9,7 @@ import InitApp from "../actions/InitApp"
 class TopComponent extends React.Component {
   constructor(props) {
     super();
-    this.state = { active: "DASHBOARD" };
+    this.state = { active: "PROMOTION" };
   }
   clickHandler(name) {
     this.setState({ active: name });
@@ -39,15 +39,28 @@ class TopComponent extends React.Component {
           break;
       }
 
-      return (
-        <div
-          style={{
-            width: "auto",
-            backGroundcolor: "#fafafa",
-            paddingRight: "5px",
-            paddingLeft: "5px"
-          }}
-        >
+    return (
+      <div
+        style={{
+          backGroundcolor: "#fafafa",
+          paddingRight: '5px',
+          paddingLeft: '5px'
+        }}
+      >
+        <div style={{
+          backgroundColor: "#ffffff"
+        }}>
+          <div style={{ textAlign: "center" }}>
+            <img
+              style={{
+                width: "40%",
+                margin: "auto",
+                marginTop: "20px",
+                marginRight: "10px"
+              }}
+              src="imgs/ic-logo@2x.png"
+            />
+          </div>
           <div
             style={{
               backgroundColor: "#ffffff"

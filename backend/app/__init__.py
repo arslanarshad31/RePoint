@@ -37,3 +37,6 @@ class FlaskAdminView(sqla.ModelView):
 ## Admin panel
 admin.add_view(FlaskAdminView(User, db.session))
 admin.add_view(FlaskAdminView(Account, db.session))
+admin.add_view(FlaskAdminView(Bank, db.session))
+admin.add_view(FlaskAdminView(Product, db.session))
+admin.add_view(FlaskAdminView(Transaction, db.session))
