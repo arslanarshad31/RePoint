@@ -53,12 +53,13 @@ export default class Portfolio extends Component {
 
     return (
       <div>
+        <div>
         <Pie
           data={{
-            labels: [`No Attempted`, `Correct Answers`, `Incorrect Answers`],
+            labels: [`Fixed Income`, `Equity`],
             datasets: [
               {
-                data: [35, 22, 20],
+                data: [35, 42],
                 backgroundColor: ["#46BFBD", "#93C953", "#F7464A"],
                 hoverBackgroundColor: ["#5AD3D1", "#93C946", "#FF5A5E"]
               }
@@ -73,6 +74,7 @@ export default class Portfolio extends Component {
             }
           }}
         />
+        </div>
         <h1>More Data:</h1>
         <Accordion panels={panels} />
       </div>
