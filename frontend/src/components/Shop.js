@@ -7,8 +7,9 @@ export default class Shop extends React.Component {
       <div style={{ 
         paddingLeft: '10px'
        }}>
-        {["SC", "HSBC", "CITI"].map(v => {
-          return <ShopItem />;
+        {this.props.products.map(p => {
+          let bankImg = this.props.banks.filter(b => b.bankId===p.bankId)[0].logoURL
+          return <ShopItem {...p} bankImg={bankImg} />;
         })}
       </div>
     );
@@ -17,7 +18,7 @@ export default class Shop extends React.Component {
 
 class ShopItem extends React.Component {
   render() {
-    console.log("runs");
+    const { imageURL, name, originalPrice, salePrice, bankImg} = this.props;
     return (
       <div
         style={{
@@ -33,7 +34,7 @@ class ShopItem extends React.Component {
         }}
       >
         <img
-          src="https://dummyimage.com/400x400"
+          src={imageURL}
           style={{
             width: "100%",
             borderTopLeftRadius: "10px",
@@ -49,7 +50,7 @@ class ShopItem extends React.Component {
             marginBottom: "10px"
           }}
         >
-          MacBook Pro
+          {name}
         </div>
         <div
           style={{
@@ -59,7 +60,7 @@ class ShopItem extends React.Component {
             marginLeft: "10px"
           }}
         >
-          19000 points
+          {originalPrice}
         </div>
         <div
           style={{
@@ -69,10 +70,10 @@ class ShopItem extends React.Component {
             marginLeft: "10px"
           }}
         >
-          10000 points
+          {salePrice}
         </div>
         <img
-          src="https://dummyimage.com/400x400"
+          src={bankImg}
           width ='35px'
           height = '35px'
           style={{

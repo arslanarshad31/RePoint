@@ -4,35 +4,37 @@ import Dashboard from "./Dashboard";
 import Portfolio from "./Portfolio";
 import Shop from "./Shop";
 import Promotion from "./Promotion";
-import InitApp from "../actions/InitApp"
+import InitApp from "../actions"
 
-class TopComponent extends React.Component {
+class Container extends React.Component {
   constructor(props) {
     super();
-    this.state = { active: "DASHBOARD" };
+    this.state = { active: "PORTFOLIO" };
   }
   clickHandler(name) {
     this.setState({ active: name });
   }
   componentDidMount() {
-    alert("APPLICATION INITIALIZED")
-    this.props.onDataInitalized({some: "data"})
+    console.log('Getting Data..')
+    this.props.getAllData({id: "1"})
   }
   render() {
     console.log(this.props);
-    if (this.props.data == "LOADING") {
+
+    if (this.props.initialData === null) {
       return <h3>LOADING</h3>;
     } else {
+      const { initialData: {Account, Bank, Product, Stock} } = this.props;
       let content = null;
       switch (this.state.active) {
         case "DASHBOARD":
-          content = <Dashboard />;
+          content = <Dashboard accounts={Account} banks={Bank}/>
           break;
         case "PORTFOLIO":
-          content = <Portfolio />;
+          content = <Portfolio stock={Stock}/>;
           break;
         case "SHOP":
-          content = <Shop />;
+          content = <Shop products={Product} banks={Bank}/>;
           break;
         case "PROMOTION":
           content = <Promotion />;
@@ -49,17 +51,6 @@ class TopComponent extends React.Component {
           paddingLeft: '5px'
         }}
       >
-          <div style={{ textAlign: "center" }}>
-            <img
-              style={{
-                width: "40%",
-                margin: "auto",
-                marginTop: "20px",
-                marginRight: "10px"
-              }}
-              src="imgs/ic-logo@2x.png"
-            />
-          </div>
           <div
             style={{
               backgroundColor: "#ffffff"
@@ -149,17 +140,16 @@ class NavItem extends React.Component {
 }
 function mapDispatchToProps(dispatch){
   return {
-    onDataInitalized(data){
+    getAllData(data){
       dispatch(InitApp(data))
     }
   }
 }
 function mapStateToProps(state) {
+  console.log(state)
   return {
-    data: state.InitAppReducer.data
+    initialData: state.InitAppReducer.data || null
   };
 }
 
-const Top = connect(mapStateToProps, mapDispatchToProps)(TopComponent);
-
-export default Top;
+export default connect(mapStateToProps, mapDispatchToProps)(Container);

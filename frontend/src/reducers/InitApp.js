@@ -1,13 +1,13 @@
-const InitAppReducer = (state = {}, action) => {
+const reducer = (state = {}, action) => {
     switch(action.type){
-        case "INIT_APP":
+        case "GET_ALL":
             return {
-                data: action.payload, 
-                ...state
+                ...state,
+                data: action.payload
             }
         default:
             return state
     }
 }
 
-export default InitAppReducer
+export default reducer;

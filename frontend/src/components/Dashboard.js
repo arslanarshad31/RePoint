@@ -17,14 +17,12 @@ export default class Dashboard extends React.Component {
     this.setState({modalContent: false})
   }
   render() {
+     const { accounts, banks } = this.props;
     return (
       <div>
-        {[
-          { name: "SC", pts: 1000 },
-          { name: "HSBC", pts: 1000 },
-          { name: "CITI", pts: 500 }
-        ].map(val => {
-          return <DashItem name={val.name} pts={val.pts} modalHandler={this.modalHandler.bind(this)}/>;
+        {banks.sort((a, b) => a.bankId> b.bankId).map(bank => {
+          let account = accounts.filter(a => Number(a.bankId)===bank.bankId)[0];
+          return <DashItem bank={bank} account={account} modalHandler={this.modalHandler.bind(this)}/>;
         })}
         <InvestModal popen={this.state.modalContent} clh = {this.modalCloseHandler.bind(this)}/>
       </div> 
@@ -34,6 +32,7 @@ export default class Dashboard extends React.Component {
 
 class DashItem extends React.Component {
   render() {
+    const {bank, account} = this.props;
     return (
       <div
         style={{
@@ -47,7 +46,7 @@ class DashItem extends React.Component {
         }}
       >
         <img
-          src="https://dummyimage.com/400x400/000/fff"
+          src={bank.logoURL}
           width="70px"
           height="70px"
           style={{
@@ -73,7 +72,7 @@ class DashItem extends React.Component {
               color: "#4b4d5a"
             }}
           >
-            Societe General
+            {bank.name}
           </span>
           <div
             style={{
@@ -81,9 +80,9 @@ class DashItem extends React.Component {
               color: "#7d819a"
             }}
           >
-            <div>Account number:</div>
-            <div>Account number:</div>
-            <div>Account number:</div>
+            <div>A/C No: {account.accountNumber}</div>
+            <div>Points: {account.points.toLocaleString()}</div>
+            <div><b>Redeemable Value: </b> {Number(account.balance/100).toLocaleString() + " HKD"} </div>
             <div onClick={e => this.props.modalHandler(this.props.name)}
               style={{
                 fontSize: "14px",
