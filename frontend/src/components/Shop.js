@@ -4,11 +4,11 @@ import { Button, Card, Image, Item, Label, Icon } from "semantic-ui-react";
 export default class Shop extends React.Component {
   render() {
     return (
-      <Item.Group divided >
+      <div>
         {["SC", "HSBC", "CITI"].map(v => {
           return <ShopItem />;
         })}
-      </Item.Group>
+      </div>
     );
   }
 }
