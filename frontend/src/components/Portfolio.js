@@ -4,32 +4,18 @@ import { Message, Label, Accordion, Card } from "semantic-ui-react";
 
 export default class Portfolio extends Component {
   render() {
-    const panels = [
-      {
-        key: "1",
-        title: <CustomLabel content="iShares Select Dividend ETF" />,
-        content: <DetailsPanel content="iShares Select Dividend ETF" />
-      },
-      {
-        key: "2",
-        title: <CustomLabel content="iShares Select Dividend ETF" />,
-        content: <DetailsPanel content="iShares Select Dividend ETF" />
-      },
-      {
-        key: "3",
-        title: <CustomLabel content="iShares Select Dividend ETF" />,
-        content: <DetailsPanel content="iShares Select Dividend ETF" />
-      },
-      {
-        key: "4",
-        title: <CustomLabel content="iShares Select Dividend ETF" />,
-        content: <DetailsPanel content="iShares Select Dividend ETF" />
-      }
-    ];
+    const panels = this.props.stock.map(s => ({
+      key: s.stockId,
+      title: <CustomLabel content={s.name} />,
+      content: <DetailsPanel content={s.name} />
+    }));
 
     return (
       <div>
-        <div>
+        <div style={{
+          marginTop: '20px',
+          marginBottom: '20px'
+        }}>
           <Pie
             data={{
               labels: [`Fixed Income`, `Equity`],
@@ -50,10 +36,20 @@ export default class Portfolio extends Component {
               }
             }}
           />
+        <div style={{
+          textAlign: "center",
+          color: "#7d819a",
+          fontSize: '18px',
+          marginTop: '20px',
+        }}>NAV as of Today: <b>HKD 1,000</b></div>
+        <div style={{
+          textAlign: "center",
+          color: "#7d819a",
+          fontSize: '18px',
+          marginTop: '10px',
+        }}>NAV Return: <b>60%</b></div>
         </div>
-        <h1>More Data:</h1>
-
-          <Accordion panels={panels} />
+        <Accordion panels={panels}/>
       </div>
     );
   }
@@ -66,19 +62,25 @@ class DetailsPanel extends Component {
         style={{
           backgroundColor: "#f8f8f8",
           border: "solid 1px #e3e3e3",
-          padding: "0 20px"
+          padding: "20px 20px",
+          color: "#7d819a"
         }}
       >
-        <ul>
-          <li>
-            Current Price:HK$563{" "}
-            <span style={{ color: "green" }}>(+1.04%)</span>
-          </li>
+        <div style={{ marginBottom: "10px" }}>
+          - Current Price:{" "}
+          <b>
+            HK$563
+            <span style={{ color: "green", paddingLeft: "10px" }}>+1.04%</span>
+          </b>
+        </div>
 
-          <li>
-            Your Returns:HK$20053 <span style={{ color: "red" }}>(-0.94%)</span>
-          </li>
-        </ul>
+        <div>
+          - Your Returns:{" "}
+          <b>
+            HK$20053
+            <span style={{ color: "red", paddingLeft: "10px" }}>-0.94%</span>
+          </b>
+        </div>
       </div>
     );
   }
@@ -90,14 +92,18 @@ class CustomLabel extends React.Component {
       <div
         style={{
           border: "solid 1px #e3e3e3",
-          fontSize: "2.5vh",
-          fontWeight: "bold",
-          padding: "10px 5px"
+          fontSize: "2.1vh",
+          padding: "20px 5px"
         }}
       >
         {this.props.content}
-        <div style={ {float: "right"} }>
-        <img src="imgs/st-up.png" alt="" style={{height: "3vh"}}/></div>
+        <div style={{ float: "right" }}>
+          <img
+            src="imgs/arrow_up.png"
+            alt=""
+            style={{ height: "3vh", marginRight: "10px" }}
+          />
+        </div>
       </div>
     );
   }
