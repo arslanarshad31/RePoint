@@ -59,7 +59,7 @@ class Account(db.Model):
     rate = db.Column(db.Float)
     username = db.Column(db.Float)
 
-    def AddAccount(self, accountNumber, userid, bankId, balance, points, expiry, rate, username):
+    def AddAccount(self, accountNumber, userId, bankId, balance, points, expiry, rate, username):
         self.accountNumber = accountNumber
         self.userId = userId
         self.bankId = bankId
@@ -95,7 +95,7 @@ class Bank(db.Model):
     __tablename__ = 'bank'
     bankId = db.Column(db.Integer, primary_key=True)
     name = db.Column(db.String(128))
-    logoURL = db.Column(db.String(512))
+    logoURL = db.Column(db.String(2048))
 
     def getData(self):
         return {
@@ -120,20 +120,34 @@ class Product(db.Model):
     productId = db.Column(db.Integer, primary_key=True)
     name = db.Column(db.String(64))
     bankId = db.Column(db.Integer)
-    price = db.Column(db.Integer)
-    promotionOngoing = db.Column(db.Integer)
-    promotionPrice = db.Column(db.Integer)
-    promotionEnd = db.Column(db.Date)
+    originalPrice = db.Column(db.String(32))
+    saleOngoing = db.Column(db.Integer)
+    salePrice = db.Column(db.Integer)
+    saleEnd = db.Column(db.String(128))
+    imageURL = db.Column(db.String(2048))
+
+    def define(self, product):
+        self.productId = product['productId']
+        self.name = product['name']
+        self.bankId = product['bankId']
+        self.originalPrice = product['originalPrice']
+        self.saleOngoing = product['saleOngoing']
+        self.salePrice = product['salePrice']
+        self.saleEnd = product['saleEnd']
+        self.imageURL = product['imageURL']
 
     def getData(self):
+        print(self.imageURL)
+        print(self.saleEnd)
         return {
             'productId': self.productId,
             'name': self.name,
             'bankId': self.bankId,
-            'price': self.price,
-            'promotionOngoing': self.promotionOngoing,
-            'promotionPrice': self.promotionPrice,
-            'promotionEnd': self.promotionEnd
+            'originalPrice': self.originalPrice,
+            'saleOngoing': self.saleOngoing,
+            'salePrice': self.salePrice,
+            'saleEnd': self.saleEnd,
+            'imageURL': self.imageURL
         }
 
     def __repr__(self):
