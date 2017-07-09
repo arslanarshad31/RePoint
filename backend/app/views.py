@@ -131,8 +131,10 @@ def addUsers(number=None):
 		users = json.load(usersFile)
 		if number is not None:
 			number = int(number)
-			if number < len(users):
-				users = users[:number:]
+		else:
+			number = 5
+		if number < len(users):
+			users = users[:number:]
 		for user in users:
 			newEntry = User()
 			newEntry.define(user)
