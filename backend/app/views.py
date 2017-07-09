@@ -29,19 +29,23 @@ def index():
 	   	'/api/users/<username>': 'for this user',
 	   	'/api/accounts': "all accounts",
 	   	'/api/accounts/<username>' : 'account of users',
+	   	'/api/addStocks' : 'Add some random hardcoded stocks',
+	   	'/api/buyStocks' : 'Make account 1 purchase 2 units of stock 1',
 	   	'/api/banks': "all banks #cant be bothered yet",
 	   	'/api/banks/<username> #cant be bothered yet': 'account of users',
 	   	'/api/all' : 'Return everything',
 	   	'/api/clear': 'Clear all tables completely',
 	   	'/api/addUsers/{n : n < 200}': 'Add n bullshit users',
 		'/api/addBanks': 'Add the main banks',
-	   '/api/addProducts': 'Add mock products',
+	   	'/api/addProducts': 'Add mock products',
+	   	'/api/addPromotions': 'Add mock products',
 	    '/api/addAccounts': 'Generate a random number of accounts (a : 0 < a <= numBanks) for every user',
 	    '/api/allForUser': 'Return everything for a given user',
 	   	'/api/accounts/<accountNumber>' : 'details of account number',
 	   	'/login/<username>/<password>' : 'gives all user details',
 	   	'/api/adduser/<username>/<email>/<phone_number>/<password>/' : 'AddUser api',
-	   	'/api/accounts/<accountNumber>/<userid>/<bankId>/<balance>/<points>/<expiry>/<rate>/<username>/' : 'add acounts'
+	   	'/api/accounts/<accountNumber>/<userid>/<bankId>/<balance>/<points>/<expiry>/<rate>/<username>/' : 'add acounts',
+	   	'/api/populate' : '->***** RESET ENTIRE DATABASE *****<-'
    })
 
 @app.route('/api/users/')
@@ -81,7 +85,7 @@ def get_account_number_for_account(accountNumber=None):
 	if accountNumber is None :
 		return jsonify({})
 
-	allacount = Accounts.query.filter_by(accountNumber= accountNumber).all()
+	allacount = Account.query.filter_by(accountNumber= accountNumber).all()
 	if len(allacount)> 0:
 		data = [  x.getdata() for x in allacount]
 		return jsonify(data)
@@ -104,13 +108,13 @@ def get_username_for_account(username=None):
 
 @app.route('/api/all/')
 def all():
-	tables = [User, Account, Bank, Product, Transaction]
+	tables = [User, Account, Bank, Product, Stock, Promotion, ProductTransaction, StockTransaction]
 	allTableEntries = [[item.getData() for item in table.query.all()] for table in tables]
 	return jsonify({type(tables[i]()).__name__: allTableEntries[i] for i in range(len(tables))})
 
 @app.route('/api/clear/')
 def clear():
-	tables = [User, Account, Bank, Product, Transaction]
+	tables = [User, Account, Bank, Product, Stock, Promotion, ProductTransaction, StockTransaction]
 	allTableEntries = [table.query.all() for table in tables]
 	deletions = {type(tables[i]()).__name__ + "NumDeletions": len(allTableEntries[i]) for i in range(len(tables))}
 	for tableEntries in allTableEntries:
@@ -257,6 +261,10 @@ def addProducts():
 		txt = "Failed"
 	return jsonify({"result": txt})
 
+@app.route('/api/addPromotions/')
+def addPromotions():
+	return jsonify({"result": "COMING SOON"})
+
 @app.route('/api/addAccounts/')
 def addAccounts():
 	numBanks = len(Bank.query.all())
@@ -288,6 +296,65 @@ def addAccounts():
 	except:
 		txt = "Failed"
 	return jsonify({"result": txt})
+
+@app.route('/api/addStocks/')
+def addStocks():
+	stocks = [
+		{
+			'stockId': 1,
+			'name': 'iShares U.S. Preferred Stock ETF',
+			'price': 302.33
+		},
+		{
+			'stockId': 2,
+			'name': 'iShares Russell 1000 Value ETF',
+			'price': 895.82
+		},
+		{
+			'stockId': 3,
+			'name': 'iShares Core S&P Small-Cap ETF',
+			'price': 543.35
+		},
+		{
+			'stockId': 4,
+			'name': 'iShares Select Dividend ETF',
+			'price': 709.75
+		}
+	]
+	for stock in stocks:
+		newEntry = Stock()
+		newEntry.define(stock)
+		db.session.add(newEntry)
+	txt = ""
+	try:
+		db.session.commit()
+		txt = "Successfully added " + str(len(stocks)) + " stocks!"
+	except:
+		txt = "Failed"
+	return jsonify({"result": txt})
+
+@app.route('/api/buyStocks/')
+def buyStocks():
+	transactions = [
+		{
+			'transactionId': 1,
+			'stockId': 1,
+			'accountId': 1,
+			'units': 2
+		}
+	]
+	for transaction in transactions:
+		newEntry = StockTransaction()
+		newEntry.define(transaction)
+		db.session.add(newEntry)
+	txt = ""
+	try:
+		db.session.commit()
+		txt = "Successfully bought " + str(len(transaction)) + " stocks!"
+	except:
+		txt = "Failed"
+	return jsonify({"result": txt})
+
 
 @app.route('/api/allForUser/<username>')
 def allForUser(username = None):
@@ -453,6 +520,17 @@ def add_accounts(accountNumber, userid, bankId, balance, points, expiry, rate, u
   except Exception as e:
     return jsonify({'status' : 'Error'})
 
+@app.route('/api/populate/')
+def populate():
+	clear()
+	addUsers()
+	addBanks()
+	addAccounts()
+	addProducts()
+	addPromotions()
+	addStocks()
+	buyStocks()
+	return all()
 
 # @app.route('/delete/accounts/<accountNumber>')
 # def delete(accountNumber= None):

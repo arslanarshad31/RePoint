@@ -92,7 +92,7 @@ class Account(db.Model):
         return (str(self.accountNumber))
 
 class Bank(db.Model):
-    __tablename__ = 'bank'
+    __tablename__ = 'banks'
     bankId = db.Column(db.Integer, primary_key=True)
     name = db.Column(db.String(128))
     logoURL = db.Column(db.String(2048))
@@ -116,7 +116,7 @@ class Bank(db.Model):
         return str(self.name)
 
 class Product(db.Model):
-    __tablename__ = 'product'
+    __tablename__ = 'products'
     productId = db.Column(db.Integer, primary_key=True)
     name = db.Column(db.String(64))
     bankId = db.Column(db.Integer)
@@ -156,16 +156,45 @@ class Product(db.Model):
     def __unicode__(self):
         return str(self.productId)
 
-class Transaction(db.Model):
-    __tablename__ = 'transaction'
+class Promotion(db.Model):
+    __tablename__ = 'promotions'
+    promotionId = db.Column(db.Integer, primary_key=True)
+    name = db.Column(db.String(256))
+    bankId = db.Column(db.Integer)
+    description = db.Column(db.String(4096))
+
+    def define(self, promotion):
+        self.promotionId = promotion['promotionId']
+        self.name = promotion['name']
+        self.bankId = promotion['bankId']
+        self.description = promotion['description']
+
+    def getData(self):
+        print(self.imageURL)
+        print(self.saleEnd)
+        return {
+            'promotionId': self.promotionId,
+            'name': self.name,
+            'bankId': self.bankId,
+            'dscription': self.description
+        }
+
+    def __repr__(self):
+        return str(self.promotionId)
+
+    def __unicode__(self):
+        return str(self.promotionId)
+
+class ProductTransaction(db.Model):
+    __tablename__ = 'product_transactions'
     transactionId = db.Column(db.Integer, primary_key=True)
-    userId = db.Column(db.Integer)
+    accountId = db.Column(db.Integer)
     productId = db.Column(db.Integer)
 
     def getData(self):
         return {
             'transactionId': self.transactionId,
-            'userId': self.userId,
+            'accountId': self.accountId,
             'productId': self.productId
         }
 
@@ -175,6 +204,56 @@ class Transaction(db.Model):
     def __unicode__(self):
         return str(self.transactionId)
 
+class Stock(db.Model):
+    __tablename__ = 'stocks'
+    stockId = db.Column(db.Integer, primary_key=True)
+    name = db.Column(db.String(256))
+    price = db.Column(db.Float)
+
+    def define(self, stock):
+        self.stockId = stock['stockId']
+        self.name = stock['name']
+        self.price = stock['price']
+
+    def getData(self):
+        return {
+            'stockId': self.stockId,
+            'name': self.name,
+            'price': self.price,
+        }
+
+    def __repr__(self):
+        return str(self.name)
+
+    def __unicode__(self):
+        return str(self.name)
+
+class StockTransaction(db.Model):
+    __tablename__ = 'stock_transactions'
+    transactionId = db.Column(db.Integer, primary_key=True)
+    accountId = db.Column(db.Integer)
+    stockId = db.Column(db.Integer)
+    units = db.Column(db.Integer)
+
+    def define(self, stockTransaction):
+        self.transactionId = stockTransaction['transactionId']
+        self.accountId= stockTransaction['accountId']
+        self.stockId = stockTransaction['stockId']
+        self.units = stockTransaction['units']
+
+    def getData(self):
+        return {
+            'transactionId': self.transactionId,
+            'accountId': self.accountId,
+            'stockId': self.stockId,
+            'units': self.units,
+        }
+
+    def __repr__(self):
+        return str(self.transactionId)
+
+    def __unicode__(self):
+        return str(self.transactionId)
 '''
 class Goods(db.Model):
     __tablename__ = 'goods'
