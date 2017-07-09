@@ -36,6 +36,7 @@ def index():
 	   	'/api/all' : 'Return everything',
 	   	'/api/clear': 'Clear all tables completely',
 	   	'/api/addUsers/{n : n < 200}': 'Add n bullshit users',
+	   	'/api/portfolio/': 'Portfolio details',
 		'/api/addBanks': 'Add the main banks',
 	   	'/api/addProducts': 'Add mock products',
 	   	'/api/addPromotions': 'Add mock products',
@@ -300,6 +301,16 @@ def addPromotions():
 	#except:
 	#txt = "Failed"
 	return jsonify({"result": txt})
+
+@app.route('/api/portfolio/')
+def portfolio():
+	return jsonify({
+		"NAVHKD":689,
+		"NAVReturnPercent":6,
+		"currentPrice":326.5164,
+		"dailyGainPercent":5,
+		"returnPercent":8
+	})
 
 @app.route('/api/addAccounts/')
 def addAccounts():
