@@ -19,8 +19,7 @@ class Portfolio extends Component {
 
      if (this.props.portData == null) {
       return <h3 style={{textAlign: "center"}}>Loading Data</h3>;
-    } else {
-    return (
+    } else return (
       <div>
         <div style={{
           marginTop: '20px',
@@ -46,27 +45,7 @@ class Portfolio extends Component {
                 animateScale: true
               }
             }}
-          >
-            <Pie
-              data={{
-                labels: [`Fixed Income`, `Equity`],
-                datasets: [
-                  {
-                    data: [35, 42],
-                    backgroundColor: ["#46BFBD", "#93C953", "#F7464A"],
-                    hoverBackgroundColor: ["#5AD3D1", "#93C946", "#FF5A5E"]
-                  }
-                ]
-              }}
-              options={{
-                legend: {
-                  position: "bottom"
-                },
-                animation: {
-                  animateScale: true
-                }
-              }}
-            />
+          />
             <div
               style={{
                 textAlign: "center",
@@ -87,13 +66,12 @@ class Portfolio extends Component {
             >
               NAV Return: <b>{this.props.portData.NAVReturnPercent}%</b>
             </div>
-          </div>
+            </div>
           <Accordion panels={panels} />
         </div>
-      );
+      ); 
     }
   }
-}
 
 class DetailsPanel extends Component {
 
