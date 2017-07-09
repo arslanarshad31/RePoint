@@ -152,27 +152,27 @@ def addBanks():
 				{
 					'bankId':1,
 					'name': 'HSBC',
-					'logoURL': 'https://s-media-cache-ak0.pinimg.com/originals/ff/28/8c/ff288c6e973cd6c9803b117371d27068.jpg'
+					'logoURL': 'https://www.hsbc.com.hk/clientapp/hdx/images/favicon/apple-touch-icon-180x180.png'
 				},
 				{
 					'bankId':2,
 					'name': 'Citibank',
-					'logoURL': 'http://logok.org/wp-content/uploads/2014/04/Citibank-logo.png'
+					'logoURL': 'https://lh3.googleusercontent.com/mEFqHkpvgtMGIYG6MP_Sgl6o9taJ9IlUA3VBma4KQzQUIvjzcQpunQkx_3nHrIggfWs=w300'
 				},
 				{
 					'bankId': 3,
 					'name': 'Hang Seng Bank',
-					'logoURL': 'https://content.jobsdb.com/Content/CmsContent/Logo/HK/JobsDBFiles/CompanyLogo/3071-0.gif'
+					'logoURL': 'https://s3-ap-southeast-1.amazonaws.com/hs.user-files/employer_logo/142/hang-seng-bank.png'
 				},
 				{
 					'bankId': 4,
 					'name': 'Bank of East Asia',
-					'logoURL': 'http://www.sayyestobreastfeeding.hk/wp-content/uploads/08-resize.png'
+					'logoURL': 'http://thebankswiftcode.com/wp-content/uploads/2014/09/The-Bank-of-East-Asia-China-Limited-SWIFT-code-of-all-Branches-.jpg.pagespeed.ce.3fkd0_NZZK.jpg'
 				},
 				{
 					'bankId': 5,
 					'name': 'Societe General',
-					'logoURL': 'http://static5.businessinsider.com/image/533404a76da8119b6ffec9cb-1200-800/chinaxijinping.jpg'
+					'logoURL': 'http://www.bankingtech.com/files/2016/07/Soci%C3%A9t%C3%A9-G%C3%A9n%C3%A9rale.jpg'
 				}
 			]
 	for bank in banks:
