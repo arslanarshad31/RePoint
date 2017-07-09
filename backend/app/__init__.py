@@ -16,12 +16,14 @@ from flask_admin import Admin
 import logging
 from logging.handlers import RotatingFileHandler
 
+from flask_cors import CORS, cross_origin
+
+
 
 app = Flask(__name__)
 app.config.from_object('config')
 db = SQLAlchemy(app)
-
-
+cors = CORS(app, resources={r"/*": {"origins": "*"}})
 
 
 from app import views
