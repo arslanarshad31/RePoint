@@ -1,8 +1,13 @@
 import request from 'superagent'
 
 function getData_helper() {
-    let data = request.get("http://54.255.134.151:5000/api/all").then(data => JSON.parse(data.text))
-    return data;
+    return request.get("http://54.255.134.151:5000/api/all").then(data => {
+      let main = JSON.parse(data.text)
+        return request.get("http://54.255.134.151:5000/api/demoAccountData/").then(acc => {
+          main.Account = JSON.parse(acc.text)
+          return main;
+        })
+    })
 }
 
 const getAllData = () => {

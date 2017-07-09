@@ -17,37 +17,36 @@ class Portfolio extends Component {
       title: <CustomLabel icn={urls[i%2]} content={s.name} />,
       content: <DetailsPanel portData={this.props.portData}  content={s.name} />
     }));
-    if (this.props.portData == null) {
+
+     if (this.props.portData == null) {
       return <h3 style={{textAlign: "center"}}>Loading Data</h3>;
-    } else {
-      return (
-        <div>
-          <div
-            style={{
-              marginTop: "20px",
-              marginBottom: "20px"
-            }}
-          >
-            <Pie
-              data={{
-                labels: [`Fixed Income`, `Equity`],
-                datasets: [
-                  {
-                    data: [35, 42],
-                    backgroundColor: ["#46BFBD", "#93C953", "#F7464A"],
-                    hoverBackgroundColor: ["#5AD3D1", "#93C946", "#FF5A5E"]
-                  }
-                ]
-              }}
-              options={{
-                legend: {
-                  position: "bottom"
-                },
-                animation: {
-                  animateScale: true
+    } else return (
+      <div>
+        <div style={{
+          marginTop: '20px',
+          marginBottom: '20px'
+        }}>
+          <Pie
+            data={{
+              labels: [`Fixed Income`, `Equity`],
+              datasets: [
+                {
+                  data: [35, 42],
+                  backgroundColor: ["#46BFBD", "#005cff"],
+                  hoverBackgroundColor: ["#5AD3D1", "#005cff"]
                 }
-              }}
-            />
+              ]
+            }}
+            options={{
+              cutoutPercentage: '40',
+              legend: {
+                position: "bottom"
+              },
+              animation: {
+                animateScale: true
+              }
+            }}
+          />
             <div
               style={{
                 textAlign: "center",
@@ -68,13 +67,12 @@ class Portfolio extends Component {
             >
               NAV Return: <b>{this.props.portData.NAVReturnPercent}%</b>
             </div>
-          </div>
+            </div>
           <Accordion panels={panels} />
         </div>
-      );
+      ); 
     }
   }
-}
 
 class DetailsPanel extends Component {
 
@@ -115,7 +113,8 @@ class CustomLabel extends React.Component {
         style={{
           border: "solid 1px #e3e3e3",
           fontSize: "2.1vh",
-          padding: "20px 5px"
+          padding: "20px 5px",
+          backgroundColor: 'white'
         }}
       >
         {this.props.content}

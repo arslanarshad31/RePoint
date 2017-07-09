@@ -21,8 +21,6 @@ class Container extends React.Component {
     this.props.getAllData({id: "1"})
   }
   render() {
-    console.log(this.props);
-
     if (this.props.initialData === null) {
       return <LoadPage />;
     } else {
@@ -30,7 +28,7 @@ class Container extends React.Component {
       let content = null;
       switch (this.state.active) {
         case "DASHBOARD":
-          content = <Dashboard accounts={Account} banks={Bank} goToPortfolio={() => this.clickHandler('PORTFOLIO')}/>
+          content = <Dashboard accounts={Account} banks={Bank} stocks={Stock} goToPortfolio={() => this.clickHandler('PORTFOLIO')}/>
           break;
         case "PORTFOLIO":
           content = <Portfolio stocks={Stock}/>;
@@ -113,7 +111,7 @@ class Container extends React.Component {
               />
             </div>
           </div>
-          <div style={{height: "17vh"}}></div>
+          <div style={{height: "18vh"}}></div>
           {content}
         </div>
       );
@@ -159,7 +157,6 @@ function mapDispatchToProps(dispatch){
   }
 }
 function mapStateToProps(state) {
-  console.log(state)
   return {
     initialData: state.InitAppReducer.data || null
   };
