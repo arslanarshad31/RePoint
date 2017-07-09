@@ -10,7 +10,8 @@ export default class Shop extends React.Component {
           display: "flex",
           flexBasis: "100%",
           flexWrap: "wrap",
-          justifyContent: "space-between"
+          justifyContent: "space-between",
+          paddingTop: '10px'
         }}
       >
         {this.props.products.map(p => {
@@ -81,8 +82,8 @@ class ShopItem extends React.Component {
         </div>
         <img
           src={bankImg}
-          width="35px"
-          height="35px"
+          width="40px"
+          height="40px"
           style={{
             position: "absolute",
             bottom: "12px",

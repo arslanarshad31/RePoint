@@ -22,12 +22,13 @@ export default class Portfolio extends Component {
               datasets: [
                 {
                   data: [35, 42],
-                  backgroundColor: ["#46BFBD", "#93C953", "#F7464A"],
-                  hoverBackgroundColor: ["#5AD3D1", "#93C946", "#FF5A5E"]
+                  backgroundColor: ["#46BFBD", "#005cff"],
+                  hoverBackgroundColor: ["#5AD3D1", "#005cff"]
                 }
               ]
             }}
             options={{
+              cutoutPercentage: '40',
               legend: {
                 position: "bottom"
               },
@@ -94,7 +95,8 @@ class CustomLabel extends React.Component {
         style={{
           border: "solid 1px #e3e3e3",
           fontSize: "2.1vh",
-          padding: "20px 5px"
+          padding: "20px 5px",
+          backgroundColor: 'white'
         }}
       >
         {this.props.content}

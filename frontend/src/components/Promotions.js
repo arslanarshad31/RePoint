@@ -3,7 +3,6 @@ import { Button, Card, Image, Item, Label, Icon } from "semantic-ui-react";
 
 export default class Promotions extends React.Component {
   render() {
-    console.log(this.props.promos)
     let contents = this.props.promos.map(v => {
       let newimage = v.imageURL
       newimage = newimage.replace("assets/", "")
@@ -21,7 +20,6 @@ export default class Promotions extends React.Component {
         }).logoURL
       }
     }) 
-    console.log(contents)
     return (
       <Item.Group divided>
         {contents.map(v => {
