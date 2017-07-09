@@ -16,15 +16,35 @@ class Portfolio extends Component {
       title: <CustomLabel content={s.name} />,
       content: <DetailsPanel portData={this.props.portData} content={s.name} />
     }));
-    if (this.props.portData == null) {
+
+     if (this.props.portData == null) {
       return <h3 style={{textAlign: "center"}}>Loading Data</h3>;
     } else {
-      return (
-        <div>
-          <div
-            style={{
-              marginTop: "20px",
-              marginBottom: "20px"
+    return (
+      <div>
+        <div style={{
+          marginTop: '20px',
+          marginBottom: '20px'
+        }}>
+          <Pie
+            data={{
+              labels: [`Fixed Income`, `Equity`],
+              datasets: [
+                {
+                  data: [35, 42],
+                  backgroundColor: ["#46BFBD", "#005cff"],
+                  hoverBackgroundColor: ["#5AD3D1", "#005cff"]
+                }
+              ]
+            }}
+            options={{
+              cutoutPercentage: '40',
+              legend: {
+                position: "bottom"
+              },
+              animation: {
+                animateScale: true
+              }
             }}
           >
             <Pie
@@ -114,7 +134,8 @@ class CustomLabel extends React.Component {
         style={{
           border: "solid 1px #e3e3e3",
           fontSize: "2.1vh",
-          padding: "20px 5px"
+          padding: "20px 5px",
+          backgroundColor: 'white'
         }}
       >
         {this.props.content}

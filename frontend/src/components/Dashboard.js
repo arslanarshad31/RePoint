@@ -1,17 +1,16 @@
 import React from "react";
-import InvestModal from "./InvestModal";
 import { Button, Header, Icon, Modal } from "semantic-ui-react";
 
 export default class Dashboard extends React.Component {
   render() {
-    const { accounts, banks } = this.props;
+    const { accounts, banks, stocks } = this.props;
     return (
       <div>
-        {banks.sort((a, b) => a.bankId < b.bankId).map(bank => {
-          let account = accounts.filter(
-            a => Number(a.bankId) === bank.bankId
+        {accounts.map(acc => {
+          let bank = banks.filter(
+            b => Number(b.bankId) === acc.bankId
           )[0];
-          return <DashItem bank={bank} account={account} goToPortfolio={this.props.goToPortfolio.bind(this)} />;
+          return <DashItem bank={bank} account={acc} stocks={stocks} goToPortfolio={this.props.goToPortfolio.bind(this)} />;
         })}
       </div>
     );
@@ -34,7 +33,7 @@ constructor(props) {
   }
 
   render() {
-    const { bank, account } = this.props;
+    const { bank, account, stocks } = this.props;
     return (
       <div
         style={{
@@ -89,8 +88,8 @@ constructor(props) {
               Points: {account.points.toLocaleString()}
             </div>
             <div>
-              <b>Redeemable Value: </b>{" "}
-              {Number(account.balance).toLocaleString() + " HKD"}{" "}
+              <b>Redeemable Value: {" "}
+              {Math.floor(account.redeemableValueHKD).toLocaleString() + " HKD"}</b>
             </div>
             <Modal
               trigger={
@@ -153,8 +152,8 @@ constructor(props) {
                   >
                     <div style={{ fontSize: "14px" }}>
                       <b>
-                        Reedemable Value: HKD{" "}
-                        {Math.floor(account.balance).toLocaleString()}
+                        Redeemable Value: HKD{" "}
+                        {Math.floor(account.redeemableValueHKD).toLocaleString()}
                       </b>
                     </div>
                     <div style={{ marginTop: "7px", fontSize: "14px" }}>
@@ -175,25 +174,20 @@ constructor(props) {
                       <td style={{ paddingLeft: "15px" }}>Price</td>
                       <td style={{ paddingLeft: "15px" }}>Unit</td>
                     </tr>
-                    {[
-                      { etf: "iShares Select Divid", price: 100 },
-                      { etf: "iShares Select Divid", price: 98 },
-                      { etf: "iShares Select Divid", price: 190 },
-                      { etf: "iShares Select Divid", price: 210 }
-                    ].map(v => {
-                      return <TableEntry {...v} updateTotal={this.updateTotal.bind(this)} />;
+                    {stocks.map(v => {
+                      return <TableEntry etf={v.name} price={Math.floor(v.price)} updateTotal={this.updateTotal.bind(this)} />;
                     })}
 
                     <tr>
                       <td
                         style={{
-                          textAlign: "right",
+                          textAlign: "left",
                           color: "#4b4d5a",
                           padding: "25px 0px",
-                          paddingRight: "10px"
+
                         }}
                       >
-                        Total
+                        <b>Total</b>
                       </td>
                       <td>
                         <input
@@ -202,14 +196,11 @@ constructor(props) {
                             outline: "0",
                             background: "transparent",
                             borderBottom: "2px solid #e3e3e3",
-                            marginLeft: "20px",
-                            paddingLeft: '10px',
-                            marginRight: '20px'
                           }}
                           type="text"
                           name="pin"
-                          maxlength="5"
-                          size="5"
+                          maxlength="7"
+                          size="7"
                           value={this.state.sumAmount}
                         />
                       </td>
@@ -220,13 +211,12 @@ constructor(props) {
                             outline: "0",
                             background: "transparent",
                             borderBottom: "2px solid #e3e3e3",
-                            marginLeft: "20px",
-                            paddingLeft: '10px'
+                            paddingLeft: '20px'
                           }}
                           type="text"
                           name="pin"
-                          maxlength="5"
-                          size="5"
+                          maxlength="4"
+                          size="4"
                           value={this.state.sumPoints}
                         />
                       </td>
