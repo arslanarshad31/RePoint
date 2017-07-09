@@ -28,6 +28,7 @@ def index():
 	   	'/api/users': "all users",
 	   	'/api/users/<username>': 'for this user',
 	   	'/api/accounts': "all accounts",
+	   	'/api/demoAccountData': "Mock accounts",
 	   	'/api/accounts/<username>' : 'account of users',
 	   	'/api/addStocks' : 'Add some random hardcoded stocks',
 	   	'/api/buyStocks' : 'Make account 1 purchase 2 units of stock 1',
@@ -48,6 +49,41 @@ def index():
 	   	'/api/accounts/<accountNumber>/<userid>/<bankId>/<balance>/<points>/<expiry>/<rate>/<username>/' : 'add acounts',
 	   	'/api/populate' : '->***** RESET ENTIRE DATABASE *****<-'
    })
+
+@app.route('/api/demoAccountData/')
+def demoAccountData():
+	return jsonify(
+				[
+					{
+						"bankId":5,
+						"accountNumber":"#1017-2020",
+						"points":65000,
+						"pointsPerHKD":100,
+						"redeemableValueHKD":650.00
+					},
+					{
+						"bankId": 2,
+						"accountNumber": "#2010-2032",
+						"points": 70000,
+						"pointsPerHKD": 165,
+						"redeemableValueHKD":424.24
+					},
+					{
+						"bankId": 1,
+						"accountNumber": "#2032-2054",
+						"points": 40000,
+						"pointsPerHKD": 42,
+						"redeemableValueHKD": 952.38
+					},
+					{
+						"bankId": 6,
+						"accountNumber": "#2050-2072",
+						"points": 50000,
+						"pointsPerHKD": 285,
+						"redeemableValueHKD": 175.44
+					}
+				]
+	)
 
 @app.route('/api/users/')
 @app.route('/api/users/uuid/<uuid>')
@@ -174,6 +210,11 @@ def addBanks():
 					'bankId': 5,
 					'name': 'Societe General',
 					'logoURL': 'http://www.bankingtech.com/files/2016/07/Soci%C3%A9t%C3%A9-G%C3%A9n%C3%A9rale.jpg'
+				},
+				{
+					'bankId': 6,
+					'name': 'Standard Chartered Bank',
+					'logoURL': 'http://www.bankingtech.com/files/2016/03/Standard-Chartered.jpeg'
 				}
 			]
 	for bank in banks:
