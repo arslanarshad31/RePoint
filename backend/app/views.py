@@ -198,7 +198,7 @@ def addProducts():
 					"saleOngoing": True,
 					"salePrice": "197,800 points",
 					"saleEnd": None,
-					"imageURL": "https://cdn.macrumors.com/article-new/2013/09/macbookpronotouchbar.jpg"
+					"imageURL": "54.255.134.151:5000/static/macbook.jpg"
 				},
 				{
 					"productId": 2,
@@ -208,7 +208,7 @@ def addProducts():
 					"saleOngoing": True,
 					"salePrice": "86,800 points",
 					"saleEnd": None,
-					"imageURL": "https://i01.hsncdn.com/is/image/HomeShoppingNetwork/prodfull/beats-solo3-on-ear-bluetooth-wireless-headphones-d-20161018155338967~517570_alt3.jpg"
+					"imageURL": "54.255.134.151:5000/static/headphones.jpg"
 				},
 				{
 					"productId": 3,
@@ -218,7 +218,7 @@ def addProducts():
 					"saleOngoing": True,
 					"salePrice": "44,000 points",
 					"saleEnd": None,
-					"imageURL": "https://gloimg.gearbest.com/gb/pdm-product-pic/Electronic/2017/02/10/goods-img/1487211722861779920.jpg"
+					"imageURL": "54.255.134.151:5000/static/airpurifier.jpg"
 				},
 				{
 					"productId": 4,
@@ -228,7 +228,7 @@ def addProducts():
 					"saleOngoing": True,
 					"salePrice": "112,140 points",
 					"saleEnd": None,
-					"imageURL": "http://www.opusbike.com/DATA/PRODUITIMAGE/611.jpg"
+					"imageURL": "54.255.134.151:5000/static/bike.jpg"
 				},
 				{
 					"productId": 5,
@@ -238,7 +238,7 @@ def addProducts():
 					"saleOngoing": True,
 					"salePrice": "44,000 points",
 					"saleEnd": None,
-					"imageURL": "http://actualapple.com/wp-content/uploads/2016/09/afb85c35dcb5f4eaa674b99a9f19e56e.jpg"
+					"imageURL": "54.255.134.151:5000/static/iphones.jpg"
 				},
 				{
 					"productId": 6,
@@ -248,7 +248,7 @@ def addProducts():
 					"saleOngoing": True,
 					"salePrice": "10,000 points",
 					"saleEnd": "BULLSHIT_DATE",
-					"imageURL": "https://static.chemistwarehouse.com.au/ams/media/pi/67314/ADD10_800.jpg"
+					"imageURL": "54.255.134.151:5000/static/shaver.jpg"
 				}
 			]
 	for product in products:
