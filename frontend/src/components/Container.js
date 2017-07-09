@@ -112,7 +112,7 @@ class Container extends React.Component {
               />
             </div>
           </div>
-          <div style={{height: "18vh"}}></div>
+          <div style={{height: "19vh"}}></div>
           {content}
         </div>
       );
