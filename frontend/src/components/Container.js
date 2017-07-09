@@ -18,6 +18,7 @@ class Container extends React.Component {
   }
   componentDidMount() {
     console.log('Getting Data..')
+    document.title = 'RePoints'
     this.props.getAllData({id: "1"})
   }
   render() {
