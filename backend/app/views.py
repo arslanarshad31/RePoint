@@ -263,7 +263,41 @@ def addProducts():
 
 @app.route('/api/addPromotions/')
 def addPromotions():
-	return jsonify({"result": "COMING SOON"})
+	promotions = [
+		{
+			"promotionId": 1,
+			"name": "Up to 8% Spending Rebate and extra vouchers",
+			"bankId": 5,
+			"description": u"From Jan 1, 2017 till Feb 28, 2017, shop at FORTRESS* with your Citi Credit Card to enjoy up to 8% Spending Rebate, up to 50% off selected items and extra FORTRESS Gift Vouchers△ upon Instant Redemption with Points. Plus, you can enjoy up to 24 months interest-free installment purchase. Register for the rebates now!",
+			"imageURL":"54.255.134.151:5000/static/assets/ic_people.png"
+		}
+		,
+		{
+			"promotionId": 2,
+			"name": "Free Tickets of G-DRAGON 2017 WORLD TOUR IN HONG KONG",
+			"bankId": 2,
+			"description": u"Exclusive for the 10 Citi Visa Credit Cardholders with the highest accumulative amount of Samsung Pay or Visa payWave transactions during July 1 to 20, 2017, each one will be entitled to two VIP tickets to attend the G-DRAGON 2017 WORLD TOUR <ACT III: M.O.T.T.E> IN HONG KONG concert for free. The VIP tickets are valued at HK$2,588 each and are valid for the concert on August 26, 2017 (Saturday).",
+			"imageURL":"54.255.134.151:5000/static/assets/ic_see.png"
+		},
+		{
+			"promotionId": 3,
+			"name": "Enjoy 6X RewardCash all year round",
+			"bankId": 1,
+			"description": u"From now until 31 December 2017, you can earn 6X RewardCash at a wider range of merchants all year round and allocate your extra 5X RewardCash among your six preferred spending categories of Dining, Entertainment, Home, Lifestyle, China Spending and Overseas Spending.",
+			"imageURL":"54.255.134.151:5000/static/assets/ic_sun.png"
+		}
+	 ]
+	for promotion in promotions:
+		newEntry = Promotion()
+		newEntry.define(promotion)
+		db.session.add(newEntry)
+	txt = ""
+	#try:
+	db.session.commit()
+	txt = "Successfully added " + str(len(promotions)) + " promotions!"
+	#except:
+	#txt = "Failed"
+	return jsonify({"result": txt})
 
 @app.route('/api/addAccounts/')
 def addAccounts():

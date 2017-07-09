@@ -162,21 +162,22 @@ class Promotion(db.Model):
     name = db.Column(db.String(256))
     bankId = db.Column(db.Integer)
     description = db.Column(db.String(4096))
+    imageURL = db.Column(db.String(4096))
 
     def define(self, promotion):
         self.promotionId = promotion['promotionId']
         self.name = promotion['name']
         self.bankId = promotion['bankId']
         self.description = promotion['description']
+        self.imageURL = promotion['imageURL']
 
     def getData(self):
-        print(self.imageURL)
-        print(self.saleEnd)
         return {
             'promotionId': self.promotionId,
             'name': self.name,
             'bankId': self.bankId,
-            'dscription': self.description
+            'description': self.description,
+            'imageURL': self.imageURL
         }
 
     def __repr__(self):
