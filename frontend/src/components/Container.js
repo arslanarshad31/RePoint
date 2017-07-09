@@ -9,7 +9,7 @@ import InitApp from "../actions"
 class Container extends React.Component {
   constructor(props) {
     super();
-    this.state = { active: "DASHBOARD" };
+    this.state = { active: "PORTFOLIO" };
   }
   clickHandler(name) {
     this.setState({ active: name });
@@ -24,14 +24,14 @@ class Container extends React.Component {
     if (this.props.initialData === null) {
       return <h3>LOADING</h3>;
     } else {
-      const { initialData: {Account, Bank, Product} } = this.props;
+      const { initialData: {Account, Bank, Product, Stock} } = this.props;
       let content = null;
       switch (this.state.active) {
         case "DASHBOARD":
           content = <Dashboard accounts={Account} banks={Bank}/>
           break;
         case "PORTFOLIO":
-          content = <Portfolio />;
+          content = <Portfolio stock={Stock}/>;
           break;
         case "SHOP":
           content = <Shop products={Product} banks={Bank}/>;
