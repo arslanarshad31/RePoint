@@ -10,11 +10,12 @@ class Portfolio extends Component {
     this.props.getPortfolio();
   }
   render() {
+    var urls = ["imgs/arrow_up.png", "imgs/arrow_down.png"]
     console.log(this.props.portData);
-    const panels = this.props.stocks.map(s => ({
+    const panels = this.props.stocks.map((s, i) => ({
       key: s.stockId,
-      title: <CustomLabel content={s.name} />,
-      content: <DetailsPanel portData={this.props.portData} content={s.name} />
+      title: <CustomLabel icn={urls[i%2]} content={s.name} />,
+      content: <DetailsPanel portData={this.props.portData}  content={s.name} />
     }));
     if (this.props.portData == null) {
       return <h3 style={{textAlign: "center"}}>Loading Data</h3>;
@@ -120,7 +121,7 @@ class CustomLabel extends React.Component {
         {this.props.content}
         <div style={{ float: "right" }}>
           <img
-            src="imgs/arrow_up.png"
+            src={this.props.icn}
             alt=""
             style={{ height: "3vh", marginRight: "10px" }}
           />

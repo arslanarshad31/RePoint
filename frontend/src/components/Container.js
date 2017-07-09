@@ -5,7 +5,8 @@ import Portfolio from "./Portfolio";
 import Shop from "./Shop";
 import LoadPage from "./LoadPage";
 import Promotions from "./Promotions";
-import InitApp from "../actions/index"
+import InitApp from "../actions/index";
+import Dimensions from 'react-dimensions'
 
 class Container extends React.Component {
   constructor(props) {
@@ -46,6 +47,8 @@ class Container extends React.Component {
   
     return (
       <div
+        containerWidth={414}
+        containerHeight={736}
         style={{
           backgroundColor: "#fafafa",
           paddingRight: '5px',
@@ -162,4 +165,4 @@ function mapStateToProps(state) {
   };
 }
 
-export default connect(mapStateToProps, mapDispatchToProps)(Container);
+export default Dimensions()(connect(mapStateToProps, mapDispatchToProps)(Container));
